@@ -1,14 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class DragAndDrop : MonoBehaviour
 {
+    [SerializeField] private Rigidbody m_Rigidbody;
+
     private static Plane m_Plane = new Plane(Vector3.up, 0);
 
     private Vector3 m_StartPos;
 
-    private void OnMouseDown()
+    private List<Dropzone> m_TouchingDropzones = new();
+
+    private void Start()
     {
         m_StartPos = transform.position;
     }
@@ -21,49 +27,41 @@ public class DragAndDrop : MonoBehaviour
 
         if (m_Plane.Raycast(ray, out distance))
         {
-            transform.position = ray.GetPoint(distance);
+            m_Rigidbody.position = ray.GetPoint(distance);
         }
     }
 
-
     private void OnMouseUp()
     {
-        transform.position = m_StartPos;
+        if (m_TouchingDropzones.Count == 1)
+        {
+            Dropzone targetZone = m_TouchingDropzones[0];
+
+            m_Rigidbody.position = targetZone.transform.position;
+        }
+        else
+        {
+            m_Rigidbody.position = m_StartPos;
+        }
     }
 
-    // private Vector3 m_MousePosOffset;
-    // 
-    // private float m_ZCoord;
-    // 
-    // private void OnMouseDown()
-    // {
-    //     m_ZCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
-    // 
-    //     // Store offset = gameobject world pos - mouse world pos
-    //     m_MousePosOffset = gameObject.transform.position - GetMouseWorldPos();
-    // }
-    // 
-    // private void OnMouseDrag()
-    // {
-    //     transform.position = GetMouseWorldPos() - m_MousePosOffset;
-    // }
-    // 
-    // private Vector3 GetMouseWorldPos()
-    // {
-    //     // Pixel coordinates of mouse (x,y)
-    //     Vector3 mousePoint = Input.mousePosition;
-    //     
-    // 
-    //     // z coordinate of game object on screen
-    //     mousePoint.z = m_ZCoord;
-    // 
-    //     // TODO: doesn not work as bound system...
-    //     // if (transform.position.y < 0)
-    //     // {
-    //     //     mousePoint.y = 0;
-    //     // }
-    // 
-    //     // Convert it to world points
-    //     return Camera.main.ScreenToWorldPoint(mousePoint);
-    // }
+    private void OnTriggerEnter(Collider other)
+    {
+        Dropzone currentDropzone = other.gameObject.GetComponent<Dropzone>();
+
+        if (currentDropzone != null) 
+        {
+            m_TouchingDropzones.Add(currentDropzone);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Dropzone currentDropzone = other.gameObject.GetComponent<Dropzone>();
+
+        if (currentDropzone != null)
+        {
+            m_TouchingDropzones.Remove(currentDropzone);
+        }
+    }
 }

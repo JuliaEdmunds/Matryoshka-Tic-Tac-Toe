@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DropZone : MonoBehaviour
+public class Dropzone : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private GameObject m_HoverValidPlate;
+
+    // TODO: Turn on and off the plate on collision
+
+    private void OnTriggerEnter(Collider other)
     {
-        
+        m_HoverValidPlate.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerExit(Collider other)
     {
-        
+        m_HoverValidPlate.SetActive(false);
     }
 }
