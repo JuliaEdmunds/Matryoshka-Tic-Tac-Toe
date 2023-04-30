@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Dropzone : MonoBehaviour
 {
-    [SerializeField] private GameObject m_HoverValidPlate;
+    [SerializeField] private EGrid m_GridID;
+    public EGrid GridID => m_GridID;
 
-    // TODO: Turn on and off the plate on collision
+    [SerializeField] private GameObject m_HoverValidPlate;
 
     private void OnTriggerEnter(Collider other)
     {

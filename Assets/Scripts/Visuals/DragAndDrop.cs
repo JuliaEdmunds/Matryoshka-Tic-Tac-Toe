@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -12,15 +13,35 @@ public class DragAndDrop : MonoBehaviour
 
     private Vector3 m_StartPos;
 
-    private List<Dropzone> m_TouchingDropzones = new();
+    private List<Dropzone> m_OccupiedDropzones = new();
+
+    // Game Logic needs to track which piece occupies which dropzone
+    public event Action<Dropzone> OnDropped;
+
+    public event Action OnGrabbed;
 
     private void Start()
     {
         m_StartPos = transform.position;
     }
 
+    private void OnMouseDown()
+    {
+        if (!enabled)
+        {
+            return;
+        }
+
+        OnGrabbed?.Invoke();
+    }
+
     private void OnMouseDrag()
     {
+        if (!enabled)
+        {
+            return;
+        }
+
         float distance;
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -33,11 +54,18 @@ public class DragAndDrop : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (m_TouchingDropzones.Count == 1)
+        if (!enabled)
         {
-            Dropzone targetZone = m_TouchingDropzones[0];
+            return;
+        }
+
+        if (m_OccupiedDropzones.Count == 1)
+        {
+            Dropzone targetZone = m_OccupiedDropzones[0];
 
             m_Rigidbody.position = targetZone.transform.position;
+
+            OnDropped(targetZone);
         }
         else
         {
@@ -49,9 +77,9 @@ public class DragAndDrop : MonoBehaviour
     {
         Dropzone currentDropzone = other.gameObject.GetComponent<Dropzone>();
 
-        if (currentDropzone != null) 
+        if (currentDropzone != null && currentDropzone.enabled) 
         {
-            m_TouchingDropzones.Add(currentDropzone);
+            m_OccupiedDropzones.Add(currentDropzone);
         }
     }
 
@@ -59,9 +87,9 @@ public class DragAndDrop : MonoBehaviour
     {
         Dropzone currentDropzone = other.gameObject.GetComponent<Dropzone>();
 
-        if (currentDropzone != null)
+        if (currentDropzone != null && currentDropzone.enabled)
         {
-            m_TouchingDropzones.Remove(currentDropzone);
+            m_OccupiedDropzones.Remove(currentDropzone);
         }
     }
 }
