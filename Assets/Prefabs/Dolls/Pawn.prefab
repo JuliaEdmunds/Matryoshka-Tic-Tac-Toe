@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: -2549112454267045043}
   - component: {fileID: 4711795973837588173}
   - component: {fileID: -7688015085312640227}
+  - component: {fileID: 3953751193754467531}
   m_Layer: 0
   m_Name: Pawn
   m_TagString: Untagged
@@ -125,6 +126,27 @@ MonoBehaviour:
   m_PlayerID: 0
   m_PieceType: 5
   m_DragAndDrop: {fileID: 4711795973837588173}
+--- !u!95 &3953751193754467531
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7547667278050362734}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 89ae71d7fd564dc449aefb2b19d9e43c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &6437692153212039155
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -136,6 +158,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 504771610161199258, guid: 86b2ab0bb40db6347a7323069f2b229f,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 504771610161199258, guid: 86b2ab0bb40db6347a7323069f2b229f,
         type: 3}
@@ -191,6 +218,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Doll_Bottom
+      objectReference: {fileID: 0}
+    - target: {fileID: 1914106398182545200, guid: 86b2ab0bb40db6347a7323069f2b229f,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1914106398182545200, guid: 86b2ab0bb40db6347a7323069f2b229f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.045056418
+      objectReference: {fileID: 0}
+    - target: {fileID: 1914106398182545200, guid: 86b2ab0bb40db6347a7323069f2b229f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.00000001107106
       objectReference: {fileID: 0}
     - target: {fileID: 3466764570555754309, guid: 86b2ab0bb40db6347a7323069f2b229f,
         type: 3}
