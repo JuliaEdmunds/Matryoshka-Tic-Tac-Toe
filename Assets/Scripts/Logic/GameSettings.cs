@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 public static class GameSettings
 {
-    public static ECharacterType BluePlayer = ECharacterType.Human;
+    public static ECharacterType BluePlayer = ECharacterType.None;
 
-    public static ECharacterType RedPlayer = ECharacterType.Human;
+    public static ECharacterType RedPlayer = ECharacterType.None;
 }

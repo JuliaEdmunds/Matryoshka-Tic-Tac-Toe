@@ -6,11 +6,6 @@ using System.Linq;
 
 public class VisualGameManager : MonoBehaviour
 {
-    // TODO: takes and manages the grid occupied event in the future
-    // It should be responsible for enabling drag and drop each turn & enable dropzones that are valid for dragged piece
-    // Checks with game logic for pieces valid in a turn and switches between players
-    // Needs: 1) List of pieces per player; 2) List of dropzones
-
     [Header("Pieces")]
     [SerializeField] private List<Piece> m_PlayerBluePieces = new();
     [SerializeField] private List<Piece> m_PlayerRedPieces = new();
@@ -110,6 +105,11 @@ public class VisualGameManager : MonoBehaviour
     private void OnGameEnded(EPlayer winner)
     {
         Debug.Log($"{winner} won");
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("Menu");
     }
 
     void Update()

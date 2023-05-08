@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 public enum ECharacterType
 {
+    None,
     Human,
     BasicAI,
     SmartAI

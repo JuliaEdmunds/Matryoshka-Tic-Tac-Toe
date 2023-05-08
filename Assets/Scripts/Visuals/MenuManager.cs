@@ -4,18 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEditor;
+using UnityEditor.Timeline;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
     [Header("Buttons")]
     [SerializeField] private GameObject m_ExitButton;
+    [SerializeField] private GameObject m_PlayButton;
 
     [Header("Audio")]
     [SerializeField] private AudioSource m_AudioSource;
 
     [Header("Characters")]
-    [SerializeField] private List<CharacterSlot> m_OpponentSlots;
+    [SerializeField] private List<CharacterSlot> m_CharacterSlots;
 
     private void Start()
     {
@@ -27,11 +30,18 @@ public class MenuManager : MonoBehaviour
 
         m_ExitButton.SetActive(IS_EXIT_BUTTON_VISIBLE);
 
-        for (int i = 0; i < m_OpponentSlots.Count; i++)
+        for (int i = 0; i < m_CharacterSlots.Count; i++)
         {
-            CharacterSlot currentCharSlot = m_OpponentSlots[i];
+            CharacterSlot currentCharSlot = m_CharacterSlots[i];
+            LoadCharacter(currentCharSlot);
             currentCharSlot.OnCharacterTypeChanged += OnCharacterTypeChanged;
-        }
+        }        
+    }
+
+    private void LoadCharacter(CharacterSlot slot)
+    {
+        slot.LoadCharacter();
+        EnablePlayButton();
     }
 
     private void OnCharacterTypeChanged(CharacterTypeHolder characterType, CharacterSlot characterSlot)
@@ -44,6 +54,25 @@ public class MenuManager : MonoBehaviour
         {
             GameSettings.RedPlayer = characterType.CharacterType;
         }
+
+        EnablePlayButton();
+    }
+
+    private void EnablePlayButton()
+    {
+        if (GameSettings.BluePlayer != ECharacterType.None && GameSettings.RedPlayer != ECharacterType.None)
+        {
+            m_PlayButton.SetActive(true);
+        }
+        else
+        {
+            m_PlayButton.SetActive(false);
+        }
+    }
+
+    public void LoadScene()
+    {
+        SceneController.ChangeScene();
     }
 
     public void QuitGame()
