@@ -84,7 +84,6 @@ public class VisualGameManager : MonoBehaviour
         DisableTiles(validTiles);
     }
 
-    // TODO: Disable tiles
     private void DisableTiles(List<EGrid> validTiles)
     {
         // Grab all the tiles and disable the ones that are not in the validTiles
@@ -100,6 +99,10 @@ public class VisualGameManager : MonoBehaviour
     private void OnGridOccupied(Piece piece, Dropzone targetZone)
     {
         m_GameLogic.SetPieceOnBoard(piece.PieceType, targetZone.GridID);
+
+        targetZone.NeutralCube.SetActive(false);
+        targetZone.RedCube.SetActive(piece.PlayerID == EPlayer.Red);
+        targetZone.BlueCube.SetActive(piece.PlayerID == EPlayer.Blue);
     }
 
     private void OnGameEnded(EPlayer winner)
