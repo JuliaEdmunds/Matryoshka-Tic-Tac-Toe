@@ -9,25 +9,24 @@ public class SceneController : MonoBehaviour
     private static SceneController m_Instance;
     private static Animator m_CurtainAnimator;
 
-    private const string MAIN_SCENE = "Main";
-    private const string MENU_SCENE = "Menu";
-
     private const string CLOSE_TRIGGER = "isClosing";
 
-    public static void ChangeScene()
+    public static void ChangeScene(EScene sceneToLoad)
     {
         TryInit();
 
-        m_Instance.StartCoroutine(m_Instance.DoChangeScene());
+        m_Instance.StartCoroutine(m_Instance.DoChangeScene(sceneToLoad));
     }
 
-    private IEnumerator DoChangeScene()
+    private IEnumerator DoChangeScene(EScene sceneToLoad)
     {
+        string scene = sceneToLoad.ToString();
+
         m_CurtainAnimator.SetBool(CLOSE_TRIGGER, true);
 
         yield return new WaitForSeconds(2);
 
-        SceneManager.LoadScene(MAIN_SCENE);
+        SceneManager.LoadScene(scene);
 
         m_CurtainAnimator.SetBool(CLOSE_TRIGGER, false);
     }

@@ -9,4 +9,6 @@ public static class GameSettings
     public static ECharacterType BluePlayer = ECharacterType.None;
 
     public static ECharacterType RedPlayer = ECharacterType.None;
+
+    public static EPlayer Winner = EPlayer.Invalid;
 }

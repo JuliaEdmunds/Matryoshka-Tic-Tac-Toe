@@ -9,6 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7688015085312640227, guid: 87174cde8f58d1442b232ac73acec50c,
         type: 3}
+      propertyPath: m_PlayerID
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7688015085312640227, guid: 87174cde8f58d1442b232ac73acec50c,
+        type: 3}
       propertyPath: m_PieceType
       value: 4
       objectReference: {fileID: 0}
@@ -140,7 +145,7 @@ PrefabInstance:
     - target: {fileID: 7547667278050362734, guid: 87174cde8f58d1442b232ac73acec50c,
         type: 3}
       propertyPath: m_Name
-      value: Pawn_Big Variant
+      value: Pawn_Big Blue Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87174cde8f58d1442b232ac73acec50c, type: 3}

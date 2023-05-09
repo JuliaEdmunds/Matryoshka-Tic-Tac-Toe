@@ -3,15 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using TMPro;
 
 public class VisualGameManager : MonoBehaviour
 {
+    private const string MENU_SCENE = "Menu";
+
     [Header("Pieces")]
     [SerializeField] private List<Piece> m_PlayerBluePieces = new();
     [SerializeField] private List<Piece> m_PlayerRedPieces = new();
 
     [Header("Board")]
     [SerializeField] private List<Dropzone> m_Dropzones = new();
+
+    [Header("Game Over")]
+    [SerializeField] private GameObject m_GameOverScreen;
+    [SerializeField] private TextMeshProUGUI m_GameOverText;
 
     private GameLogic m_GameLogic = new();
 
@@ -107,12 +114,23 @@ public class VisualGameManager : MonoBehaviour
 
     private void OnGameEnded(EPlayer winner)
     {
-        Debug.Log($"{winner} won");
+        StartCoroutine(ShowGameOverScreen(winner));
+    }
+
+    private IEnumerator ShowGameOverScreen(EPlayer winner)
+    {
+        m_GameOverText.text = $"{winner} won";
+        m_GameOverText.color = winner == EPlayer.Blue ? Color.blue : Color.red;
+        m_GameOverScreen.SetActive(true);
+
+        yield return new WaitForSeconds(2);
+
+        BackToMenu();
     }
 
     public void BackToMenu()
     {
-        SceneManager.LoadScene("Menu");
+        SceneController.ChangeScene(EScene.Menu);
     }
 
     void Update()

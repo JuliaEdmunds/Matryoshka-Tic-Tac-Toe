@@ -154,7 +154,7 @@ public class GameLogic
 
     private void EndGame()
     {
-        // Raise end game event
+        GameSettings.Winner = m_Winner;
         OnGameEnded(m_Winner);
     }
 }

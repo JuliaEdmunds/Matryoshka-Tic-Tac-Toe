@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 public enum EPlayer
 {
+    Invalid,
     Blue,
     Red
 }

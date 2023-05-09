@@ -19,6 +19,8 @@ public class MenuManager : MonoBehaviour
 
     [Header("Characters")]
     [SerializeField] private List<CharacterSlot> m_CharacterSlots;
+    [SerializeField] private GameObject m_BlueCrown;
+    [SerializeField] private GameObject m_RedCrown;
 
     private void Start()
     {
@@ -35,13 +37,21 @@ public class MenuManager : MonoBehaviour
             CharacterSlot currentCharSlot = m_CharacterSlots[i];
             LoadCharacter(currentCharSlot);
             currentCharSlot.OnCharacterTypeChanged += OnCharacterTypeChanged;
-        }        
+        }
+
+        CheckForCrown();
     }
 
     private void LoadCharacter(CharacterSlot slot)
     {
         slot.LoadCharacter();
         EnablePlayButton();
+    }
+
+    private void CheckForCrown()
+    {
+        m_BlueCrown.SetActive(GameSettings.Winner == EPlayer.Blue);
+        m_RedCrown.SetActive(GameSettings.Winner == EPlayer.Red);
     }
 
     private void OnCharacterTypeChanged(CharacterTypeHolder characterType, CharacterSlot characterSlot)
@@ -72,7 +82,7 @@ public class MenuManager : MonoBehaviour
 
     public void LoadScene()
     {
-        SceneController.ChangeScene();
+        SceneController.ChangeScene(EScene.Main);
     }
 
     public void QuitGame()
