@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 public enum EPiece
 {
     Smallest,
-    Smallish,
     Small,
+    Smallish,
     Biggish,
     Big,
     Biggest
