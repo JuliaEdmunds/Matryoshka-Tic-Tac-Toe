@@ -13,6 +13,9 @@ public class Dropzone : MonoBehaviour
     [SerializeField] private GameObject m_NeutralCube;
     public GameObject NeutralCube => m_NeutralCube;
 
+    [SerializeField] private GameObject m_ValidZoneRing;
+    public GameObject ValidZoneRing => m_ValidZoneRing;
+
     [SerializeField] private EGrid m_GridID;
     public EGrid GridID => m_GridID;
 }

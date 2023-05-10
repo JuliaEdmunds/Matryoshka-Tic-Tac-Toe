@@ -13,6 +13,7 @@ public class Piece : MonoBehaviour
 
     public event Action<Piece, Dropzone> OnGridOccupied;
     public event Action<Piece> OnPieceGrabbed;
+    public event Action OnPieceReleased;
 
     public EPlayer PlayerID => m_PlayerID;
     public EPiece PieceType => m_PieceType;
@@ -21,6 +22,7 @@ public class Piece : MonoBehaviour
     {
         m_DragAndDrop.OnDropped += OnDropped;
         m_DragAndDrop.OnGrabbed += OnGrabbed;
+        m_DragAndDrop.OnDragEnded += OnDragEnded;
     }
 
     private void OnGrabbed()
@@ -31,6 +33,11 @@ public class Piece : MonoBehaviour
     private void OnDropped(Dropzone tile)
     {
         OnGridOccupied(this, tile);
+    }
+
+    private void OnDragEnded()
+    {
+        OnPieceReleased();
     }
 
     public void EnableDrag()

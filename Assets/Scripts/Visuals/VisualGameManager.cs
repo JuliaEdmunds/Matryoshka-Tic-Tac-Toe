@@ -24,8 +24,8 @@ public class VisualGameManager : MonoBehaviour
 
     private void Start()
     {
-        m_PlayerBluePieces.ForEach(piece => { piece.OnGridOccupied += OnGridOccupied; piece.OnPieceGrabbed += OnPieceGrabbed; });
-        m_PlayerRedPieces.ForEach(piece => { piece.OnGridOccupied += OnGridOccupied; piece.OnPieceGrabbed += OnPieceGrabbed; });
+        m_PlayerBluePieces.ForEach(piece => { piece.OnGridOccupied += OnGridOccupied; piece.OnPieceGrabbed += OnPieceGrabbed; piece.OnPieceReleased += OnPieceReleased; });
+        m_PlayerRedPieces.ForEach(piece => { piece.OnGridOccupied += OnGridOccupied; piece.OnPieceGrabbed += OnPieceGrabbed; piece.OnPieceReleased += OnPieceReleased; });
 
         m_GameLogic.OnTurnStarted += OnTurnStarted;
         m_GameLogic.OnGameEnded += OnGameEnded;
@@ -99,7 +99,10 @@ public class VisualGameManager : MonoBehaviour
             Dropzone currentTile = m_Dropzones[i];
             EGrid currentTilePos = currentTile.GridID;
 
-            currentTile.enabled = validTiles.Contains(currentTilePos);
+            bool isValidTile = validTiles.Contains(currentTilePos);
+
+            currentTile.enabled = isValidTile;
+            currentTile.ValidZoneRing.SetActive(isValidTile);
         }
     }
 
@@ -110,6 +113,21 @@ public class VisualGameManager : MonoBehaviour
         targetZone.NeutralCube.SetActive(false);
         targetZone.RedCube.SetActive(piece.PlayerID == EPlayer.Red);
         targetZone.BlueCube.SetActive(piece.PlayerID == EPlayer.Blue);
+    }
+
+    private void OnPieceReleased()
+    {
+        ClearVisualAids();
+    }
+
+    private void ClearVisualAids()
+    {
+        for (int i = 0; i < m_Dropzones.Count; i++)
+        {
+            Dropzone currentDropzone = m_Dropzones[i];
+
+            currentDropzone.ValidZoneRing.SetActive(false);
+        }
     }
 
     private void OnGameEnded(EPlayer winner)

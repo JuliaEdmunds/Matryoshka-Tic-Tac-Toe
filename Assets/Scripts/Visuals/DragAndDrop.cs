@@ -22,6 +22,8 @@ public class DragAndDrop : MonoBehaviour
 
     public event Action OnGrabbed;
 
+    public event Action OnDragEnded;
+
     private void Start()
     {
         m_StartPos = transform.position;
@@ -73,6 +75,8 @@ public class DragAndDrop : MonoBehaviour
         {
             m_Rigidbody.position = m_StartPos;
         }
+
+        OnDragEnded?.Invoke();
     }
 
     private void OnTriggerEnter(Collider other)
