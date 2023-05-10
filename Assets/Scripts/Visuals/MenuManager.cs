@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEditor;
 using UnityEditor.Timeline;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class MenuManager : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private GameObject m_ExitButton;
     [SerializeField] private GameObject m_PlayButton;
+    [SerializeField] private GameObject m_Instructions;
 
     [Header("Audio")]
     [SerializeField] private AudioSource m_AudioSource;
@@ -73,10 +75,12 @@ public class MenuManager : MonoBehaviour
         if (GameSettings.BluePlayer != ECharacterType.None && GameSettings.RedPlayer != ECharacterType.None)
         {
             m_PlayButton.SetActive(true);
+            m_Instructions.SetActive(false);
         }
         else
         {
             m_PlayButton.SetActive(false);
+            m_Instructions.SetActive(true);
         }
     }
 
