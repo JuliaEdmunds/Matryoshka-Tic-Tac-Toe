@@ -132,10 +132,10 @@ public class VisualGameManager : MonoBehaviour
 
     private void OnPieceReleased()
     {
-        ClearVisualAids();
+        ResetVisualAids();
     }
 
-    private void ClearVisualAids()
+    private void ResetVisualAids()
     {
         for (int i = 0; i < m_Dropzones.Count; i++)
         {
