@@ -46,11 +46,9 @@ public class DragAndDrop : MonoBehaviour
             return;
         }
 
-        float distance;
-
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (m_Plane.Raycast(ray, out distance))
+        if (m_Plane.Raycast(ray, out float distance))
         {
             m_Rigidbody.position = ray.GetPoint(distance);
         }

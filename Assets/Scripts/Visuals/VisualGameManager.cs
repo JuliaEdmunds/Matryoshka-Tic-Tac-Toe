@@ -137,8 +137,16 @@ public class VisualGameManager : MonoBehaviour
 
     private IEnumerator ShowGameOverScreen(EPlayer winner)
     {
-        m_GameOverText.text = $"{winner} won";
-        m_GameOverText.color = winner == EPlayer.Blue ? Color.blue : Color.red;
+        if (winner != EPlayer.Invalid)
+        {
+            m_GameOverText.text = $"{winner} won";
+            m_GameOverText.color = winner == EPlayer.Blue ? Color.blue : Color.red;
+        }
+        else
+        {
+            m_GameOverText.text = "It's a draw...";
+        }
+        
         m_GameOverScreen.SetActive(true);
 
         yield return new WaitForSeconds(2);

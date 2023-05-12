@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -39,8 +40,14 @@ public class GameLogic
 
     private void StartTurn()
     {
-        // Raises an event
-        OnTurnStarted(CurrentPlayer, CurrentPlayerValidPieces);
+        // Check if there are valid moves or if it's a draw
+        CheckIfDraw();
+
+        if (m_GameState == EGameState.Playing)
+        {
+            // Raises an event
+            OnTurnStarted(CurrentPlayer, CurrentPlayerValidPieces);
+        }
     }
 
     public List<EPiece> CurrentPlayerValidPieces => CurrentPlayer == EPlayer.Blue ? m_PlayerBlueValidPieces : m_PlayerRedValidPPieces;
@@ -95,6 +102,55 @@ public class GameLogic
         {
             EndGame();
         }
+    }
+
+    // Check for draw (either no more pieces for both players or neither has valid moves)
+    private int m_NumSkipTurns = 0;
+    private void CheckIfDraw()
+    {
+        // If there is already a winner early out
+        if (m_Winner != EPlayer.Invalid)
+        {
+            return;
+        }
+
+        // If neither player has pieces left it's a draw
+        if (!m_PlayerBlueValidPieces.Any() && !m_PlayerRedValidPPieces.Any())
+        {
+            m_Winner = EPlayer.Invalid;
+            m_GameState = EGameState.Over;
+            EndGame();
+            return;
+        }
+
+        // Verify that the current player has at least 1 valid move (if so it's not a draw)
+        bool hasValidMoves;
+        for (int i = 0; i < CurrentPlayerValidPieces.Count; i++)
+        {
+            EPiece currentPiece = CurrentPlayerValidPieces[i];
+            List<EGrid> currentPieceValidTiles = CheckValidTiles(currentPiece);
+            hasValidMoves = currentPieceValidTiles.Any();
+
+            if (hasValidMoves)
+            {
+                m_NumSkipTurns = 0;
+                return;
+            }
+        }
+
+        m_NumSkipTurns++;
+
+        // If turns skipped consecutively by both player trigger a draw
+        if (m_NumSkipTurns >= 2)
+        {
+            m_Winner = EPlayer.Invalid;
+            m_GameState = EGameState.Over;
+            EndGame();
+            return;
+        }
+
+        // If no valid moves for current player skip their turn
+        EndTurn();
     }
 
     // Check if there's a winner in any of the rows/columns/diagonals
