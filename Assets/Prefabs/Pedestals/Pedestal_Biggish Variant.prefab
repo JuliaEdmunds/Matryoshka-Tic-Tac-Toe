@@ -10,7 +10,12 @@ PrefabInstance:
     - target: {fileID: 3274715829500419288, guid: fc9b9d2d030467a4b911e7513e6a39c1,
         type: 3}
       propertyPath: m_Name
-      value: Pedestal_Biggish
+      value: Pedestal_Biggish Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 3732158785260023964, guid: fc9b9d2d030467a4b911e7513e6a39c1,
+        type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: 4717412732416693619, guid: fc9b9d2d030467a4b911e7513e6a39c1,
         type: 3}

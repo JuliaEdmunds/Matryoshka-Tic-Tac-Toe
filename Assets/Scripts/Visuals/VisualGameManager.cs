@@ -21,6 +21,7 @@ public class VisualGameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_GameOverText;
 
     private GameLogic m_GameLogic = new();
+    private List<Piece> m_CurrentActivePieces = new();
 
     private void Start()
     {
@@ -45,6 +46,8 @@ public class VisualGameManager : MonoBehaviour
 
     private void OnTurnStarted(EPlayer currentPlayer, List<EPiece> currentValidPieces)
     {
+        m_CurrentActivePieces.Clear();
+
         if (currentPlayer == EPlayer.Blue)
         {
             EnableActivePieces(m_PlayerBluePieces, currentValidPieces);
@@ -64,14 +67,18 @@ public class VisualGameManager : MonoBehaviour
             Piece currentPiece = allCurrentPlayerPieces[i];
             EPiece currentPieceType = currentPiece.PieceType;
 
-            if (currentPlayerActivePieces.Contains(currentPieceType))
+            bool isActivePiece = currentPlayerActivePieces.Contains(currentPieceType);
+            if (isActivePiece)
             {
                 currentPiece.EnableDrag();
+                m_CurrentActivePieces.Add(currentPiece);
             }
             else
             {
                 currentPiece.DisableDrag();
             }
+
+            currentPiece.ValidPieceRing.SetActive(isActivePiece);
         }
     }
 
@@ -80,15 +87,23 @@ public class VisualGameManager : MonoBehaviour
         for (int i = 0; i < all2ndPlayerPieces.Count; i++)
         {
             Piece currentPiece = all2ndPlayerPieces[i];
+            currentPiece.ValidPieceRing.SetActive(false);
             currentPiece.DisableDrag();
         }
     }
 
     private void OnPieceGrabbed(Piece piece)
     {
+        // Check valid tiles for selected piece & highlight valid ones
         EPiece pieceType = piece.PieceType;
         List<EGrid> validTiles = m_GameLogic.CheckValidTiles(pieceType);
         DisableTiles(validTiles);
+
+        for (int i = 0; i < m_CurrentActivePieces.Count; i++)
+        {
+            Piece currentPiece = m_CurrentActivePieces[i];
+            currentPiece.ValidPieceRing.SetActive(false);
+        }
     }
 
     private void DisableTiles(List<EGrid> validTiles)
@@ -127,6 +142,12 @@ public class VisualGameManager : MonoBehaviour
             Dropzone currentDropzone = m_Dropzones[i];
 
             currentDropzone.ValidZoneRing.SetActive(false);
+        }
+
+        for (int i = 0; i < m_CurrentActivePieces.Count; i++)
+        {
+            Piece currentPiece = m_CurrentActivePieces[i];
+            currentPiece.ValidPieceRing.SetActive(true);
         }
     }
 

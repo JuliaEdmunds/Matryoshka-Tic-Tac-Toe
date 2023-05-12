@@ -67,6 +67,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4348896161851778280, guid: 87174cde8f58d1442b232ac73acec50c,
+        type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 2.1
+      objectReference: {fileID: 0}
     - target: {fileID: 5690601312231433467, guid: 87174cde8f58d1442b232ac73acec50c,
         type: 3}
       propertyPath: m_RootOrder
