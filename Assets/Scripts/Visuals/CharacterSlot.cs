@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class CharacterSlot : MonoBehaviour
 {
-    [SerializeField] private EPlayer m_PlayerColour;
-    public EPlayer PlayerColour => m_PlayerColour;
+    [SerializeField] private EPlayerColour m_PlayerColour;
+    public EPlayerColour PlayerColour => m_PlayerColour;
 
     [SerializeField] private List<CharacterTypeHolder> m_OpponentTypes;
 
@@ -19,7 +19,7 @@ public class CharacterSlot : MonoBehaviour
     private void OnTriggerEnter(Collider opponent)
     {
         GameObject draggedOpponent = opponent.gameObject;
-        ECharacterType draggedOpponentType = draggedOpponent.GetComponent<CharacterTypeHolder>().CharacterType;
+        EPlayerType draggedOpponentType = draggedOpponent.GetComponent<CharacterTypeHolder>().CharacterType;
 
         if (m_CurrentOpponent != null)
         {
@@ -31,7 +31,7 @@ public class CharacterSlot : MonoBehaviour
         {
             CharacterTypeHolder currentOpponent = m_OpponentTypes[i];
 
-            ECharacterType currentOpponentType = currentOpponent.CharacterType;
+            EPlayerType currentOpponentType = currentOpponent.CharacterType;
 
             if (draggedOpponentType == currentOpponentType)
             {
@@ -44,15 +44,15 @@ public class CharacterSlot : MonoBehaviour
 
     public void LoadCharacter()
     {
-        ECharacterType currentCharacterType;
+        EPlayerType currentCharacterType;
 
-        if (this.PlayerColour == EPlayer.Blue && GameSettings.BluePlayer != ECharacterType.None)
+        if (this.PlayerColour == EPlayerColour.Blue && GameSettings.BluePlayer != EPlayerType.Invalid)
         {
             currentCharacterType = GameSettings.BluePlayer;
 
             EnableCharacterInSlot(currentCharacterType);
         }
-        else if (this.PlayerColour == EPlayer.Red && GameSettings.RedPlayer != ECharacterType.None)
+        else if (this.PlayerColour == EPlayerColour.Red && GameSettings.RedPlayer != EPlayerType.Invalid)
         {
             currentCharacterType = GameSettings.RedPlayer;
 
@@ -60,13 +60,13 @@ public class CharacterSlot : MonoBehaviour
         }
     }
 
-    private void EnableCharacterInSlot(ECharacterType characterType)
+    private void EnableCharacterInSlot(EPlayerType characterType)
     {
         for (int i = 0; i < m_OpponentTypes.Count; i++)
         {
             CharacterTypeHolder currentCharacter = m_OpponentTypes[i];
 
-            ECharacterType currentCharacterType = currentCharacter.CharacterType;
+            EPlayerType currentCharacterType = currentCharacter.CharacterType;
 
             if (characterType == currentCharacterType)
             {

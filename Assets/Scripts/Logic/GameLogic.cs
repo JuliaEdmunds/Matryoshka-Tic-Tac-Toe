@@ -8,10 +8,11 @@ using UnityEngine;
 
 public class GameLogic
 {
-    public event Action<EPlayer, List<EPiece>> OnTurnStarted;
-    public event Action<EPlayer> OnGameEnded;
+    public event Action<EPlayerColour, List<EPiece>> OnTurnStarted;
+    public event Action<EPlayerColour> OnTurnEnded;
+    public event Action<EPlayerColour> OnGameEnded;
 
-    public EPlayer CurrentPlayer { get; private set; }
+    public EPlayerColour CurrentPlayer { get; private set; }
 
     private List<EPiece> m_PlayerBlueValidPieces = new();
     private List<EPiece> m_PlayerRedValidPPieces = new();
@@ -20,7 +21,7 @@ public class GameLogic
 
     private EGameState m_GameState;
 
-    private EPlayer m_Winner;
+    private EPlayerColour m_Winner;
 
     public void StartGame()
     {
@@ -33,7 +34,7 @@ public class GameLogic
 
         m_GameState = EGameState.Playing;
 
-        CurrentPlayer = EPlayer.Blue;
+        CurrentPlayer = EPlayerColour.Blue;
 
         StartTurn();
     }
@@ -50,7 +51,7 @@ public class GameLogic
         }
     }
 
-    public List<EPiece> CurrentPlayerValidPieces => CurrentPlayer == EPlayer.Blue ? m_PlayerBlueValidPieces : m_PlayerRedValidPPieces;
+    public List<EPiece> CurrentPlayerValidPieces => CurrentPlayer == EPlayerColour.Blue ? m_PlayerBlueValidPieces : m_PlayerRedValidPPieces;
 
     // Call from VM
     public List<EGrid> CheckValidTiles(EPiece piece)
@@ -87,14 +88,15 @@ public class GameLogic
         EndTurn();
     }
 
-
     private void EndTurn()
     {
+        OnTurnEnded?.Invoke(CurrentPlayer);
+
         CheckWinner();
 
         if (m_GameState != EGameState.Over)
         {
-            CurrentPlayer = CurrentPlayer == EPlayer.Red ? EPlayer.Blue : EPlayer.Red;
+            CurrentPlayer = CurrentPlayer == EPlayerColour.Red ? EPlayerColour.Blue : EPlayerColour.Red;
             StartTurn();
         }
 
@@ -109,7 +111,7 @@ public class GameLogic
     private void CheckIfDraw()
     {
         // If there is already a winner early out
-        if (m_Winner != EPlayer.Invalid)
+        if (m_Winner != EPlayerColour.Invalid)
         {
             return;
         }
@@ -117,7 +119,7 @@ public class GameLogic
         // If neither player has pieces left it's a draw
         if (!m_PlayerBlueValidPieces.Any() && !m_PlayerRedValidPPieces.Any())
         {
-            m_Winner = EPlayer.Invalid;
+            m_Winner = EPlayerColour.Invalid;
             m_GameState = EGameState.Over;
             EndGame();
             return;
@@ -143,7 +145,7 @@ public class GameLogic
         // If turns skipped consecutively by both player trigger a draw
         if (m_NumSkipTurns >= 2)
         {
-            m_Winner = EPlayer.Invalid;
+            m_Winner = EPlayerColour.Invalid;
             m_GameState = EGameState.Over;
             EndGame();
             return;
@@ -198,12 +200,12 @@ public class GameLogic
             return;
         }
 
-        EPlayer? tileContent = m_BoardTiles[tile1].Player;
+        EPlayerColour? tileContent = m_BoardTiles[tile1].Player;
 
         // Check if and if yes who is the winner
         if (m_BoardTiles[tile2].Player == tileContent && m_BoardTiles[tile3].Player == tileContent)
         {
-            m_Winner = tileContent == EPlayer.Blue ? EPlayer.Blue : EPlayer.Red;
+            m_Winner = tileContent == EPlayerColour.Blue ? EPlayerColour.Blue : EPlayerColour.Red;
             m_GameState = EGameState.Over;
         }
     }

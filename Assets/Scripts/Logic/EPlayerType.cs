@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 [Serializable]
 
-public enum ECharacterType
+public enum EPlayerType
 {
-    None,
+    Invalid,
     Human,
     BasicAI,
     SmartAI

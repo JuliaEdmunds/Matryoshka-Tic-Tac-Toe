@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 public static class GameSettings
 {
-    public static ECharacterType BluePlayer = ECharacterType.None;
+    public static EPlayerType BluePlayer = EPlayerType.Invalid;
 
-    public static ECharacterType RedPlayer = ECharacterType.None;
+    public static EPlayerType RedPlayer = EPlayerType.Invalid;
 
-    public static EPlayer Winner = EPlayer.Invalid;
+    public static EPlayerColour Winner = EPlayerColour.Invalid;
 }

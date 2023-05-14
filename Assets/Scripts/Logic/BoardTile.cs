@@ -3,10 +3,10 @@
 [Serializable]
 public class BoardTile
 {
-    public EPlayer Player;
+    public EPlayerColour Player;
     public EPiece Piece;
 
-    public BoardTile(EPlayer player, EPiece piece)
+    public BoardTile(EPlayerColour player, EPiece piece)
     {
         Player = player;
         Piece = piece;

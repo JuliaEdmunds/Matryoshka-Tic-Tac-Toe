@@ -52,13 +52,13 @@ public class MenuManager : MonoBehaviour
 
     private void CheckForCrown()
     {
-        m_BlueCrown.SetActive(GameSettings.Winner == EPlayer.Blue);
-        m_RedCrown.SetActive(GameSettings.Winner == EPlayer.Red);
+        m_BlueCrown.SetActive(GameSettings.Winner == EPlayerColour.Blue);
+        m_RedCrown.SetActive(GameSettings.Winner == EPlayerColour.Red);
     }
 
     private void OnCharacterTypeChanged(CharacterTypeHolder characterType, CharacterSlot characterSlot)
     {
-        if (characterSlot.PlayerColour == EPlayer.Blue)
+        if (characterSlot.PlayerColour == EPlayerColour.Blue)
         {
             GameSettings.BluePlayer = characterType.CharacterType;
         }
@@ -72,7 +72,7 @@ public class MenuManager : MonoBehaviour
 
     private void EnablePlayButton()
     {
-        if (GameSettings.BluePlayer != ECharacterType.None && GameSettings.RedPlayer != ECharacterType.None)
+        if (GameSettings.BluePlayer != EPlayerType.Invalid && GameSettings.RedPlayer != EPlayerType.Invalid)
         {
             m_PlayButton.SetActive(true);
             m_Instructions.SetActive(false);

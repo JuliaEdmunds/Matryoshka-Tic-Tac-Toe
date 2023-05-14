@@ -8,8 +8,8 @@ public class Piece : MonoBehaviour
     [SerializeField] private GameObject m_ValidPieceRing;
     public GameObject ValidPieceRing => m_ValidPieceRing;
 
-    [SerializeField] private EPlayer m_PlayerID;
-    public EPlayer PlayerID => m_PlayerID;
+    [SerializeField] private EPlayerColour m_PlayerID;
+    public EPlayerColour PlayerID => m_PlayerID;
     public EPiece PieceType => m_PieceType;
 
     [SerializeField] private EPiece m_PieceType;

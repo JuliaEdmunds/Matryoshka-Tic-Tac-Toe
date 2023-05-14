@@ -7,6 +7,6 @@ using UnityEngine;
 
 public class CharacterTypeHolder : MonoBehaviour
 {
-    [SerializeField] private ECharacterType m_CharacterType;
-    public ECharacterType CharacterType => m_CharacterType;
+    [SerializeField] private EPlayerType m_CharacterType;
+    public EPlayerType CharacterType => m_CharacterType;
 }

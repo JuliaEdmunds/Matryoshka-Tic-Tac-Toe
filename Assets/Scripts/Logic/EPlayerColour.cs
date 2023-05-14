@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 [Serializable]
 
-public enum EPlayer
+public enum EPlayerColour
 {
     Invalid,
     Blue,
