@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using TMPro;
+using System;
 
 public class VisualGameManager : MonoBehaviour
 {
@@ -41,10 +42,6 @@ public class VisualGameManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Pieces are gonna be destroyed by reloading the scene but keeping unsubscription for good practice
-        m_PlayerBluePieces.ForEach(piece => { piece.OnGridOccupied -= RequestFinishMove; piece.OnPieceGrabbed -= RequestStartMove; });
-        m_PlayerRedPieces.ForEach(piece => { piece.OnGridOccupied -= RequestFinishMove; piece.OnPieceGrabbed -= RequestStartMove; });
-
         m_GameLogic.OnTurnStarted -= OnTurnStarted;
         m_GameLogic.OnTurnEnded -= OnTurnEnded;
         m_GameLogic.OnGameEnded -= OnGameEnded;
@@ -115,6 +112,21 @@ public class VisualGameManager : MonoBehaviour
         }
     }
 
+    public Dropzone GetDropzoneFromGridID(EGrid gridID)
+    {
+        for (int i = 0; i < m_Dropzones.Count; i++)
+        {
+            EGrid currentGridID = m_Dropzones[i].GridID;
+
+            if (currentGridID == gridID)
+            {
+                return m_Dropzones[i];
+            }
+        }
+
+        throw new NotSupportedException($"GridID: {gridID} does not match any Dropzones");
+    }
+
     public void RequestStartMove(Piece piece)
     {
         // Check valid tiles for selected piece & highlight valid ones
@@ -132,6 +144,8 @@ public class VisualGameManager : MonoBehaviour
     // Set piece on board and adjust the occupied cube colour
     public void RequestFinishMove(Piece piece, Dropzone targetZone)
     {
+        Rigidbody pieceRb = piece.GetComponent<Rigidbody>();
+        pieceRb.position = targetZone.transform.position;
         m_GameLogic.SetPieceOnBoard(piece.PieceType, targetZone.GridID);
 
         targetZone.NeutralCube.SetActive(false);

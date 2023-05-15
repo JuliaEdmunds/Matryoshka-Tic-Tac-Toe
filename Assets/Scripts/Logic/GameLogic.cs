@@ -17,7 +17,7 @@ public class GameLogic
     private List<EPiece> m_PlayerBlueValidPieces = new();
     private List<EPiece> m_PlayerRedValidPPieces = new();
 
-    private BoardTile[] m_BoardTiles;
+    public BoardTile[] m_BoardTiles;
 
     private EGameState m_GameState;
 

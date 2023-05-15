@@ -2,9 +2,6 @@
 
 public class HumanPlayer : APlayer
 {
-    // TODO:
-    // 1) Move dragging and dropping of pieces from VM here
-
     private List<Piece> m_ActivePieces;
 
     public override void StartTurn(List<Piece> activePieces)

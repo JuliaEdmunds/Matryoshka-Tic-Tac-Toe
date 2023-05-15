@@ -60,12 +60,10 @@ public class DragAndDrop : MonoBehaviour
         {
             return;
         }
-
+        
         if (m_OccupiedDropzones.Count == 1)
         {
             Dropzone targetZone = m_OccupiedDropzones[0];
-
-            m_Rigidbody.position = targetZone.transform.position;
 
             OnDropped(targetZone);
         }
