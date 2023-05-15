@@ -1,4 +1,6 @@
-﻿public class SmarterAIPlayer : AAIPlayer
+﻿using System.Collections.Generic;
+
+public class SmarterAIPlayer : AAIPlayer
 {
     // TODO:
     // 1) Gather all available moves
@@ -11,12 +13,12 @@
     // helper class serves GameLogic to decide on score and support SmartAI to make the "more sensible" move
     // helper class also needs to have BoardTile[] Clone(BoardTiles[] originalTiles) to determine a move at the turn's start 
 
-    public override void EndTurn()
+    public override void StartTurn(List<Piece> activePieces)
     {
         throw new System.NotImplementedException();
     }
 
-    public override void StartTurn()
+    public override void EndTurn()
     {
         throw new System.NotImplementedException();
     }

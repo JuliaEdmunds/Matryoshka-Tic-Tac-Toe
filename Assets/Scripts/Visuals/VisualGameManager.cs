@@ -7,8 +7,6 @@ using TMPro;
 
 public class VisualGameManager : MonoBehaviour
 {
-    private const string MENU_SCENE = "Menu";
-
     [Header("Pieces")]
     [SerializeField] private List<Piece> m_PlayerBluePieces = new();
     [SerializeField] private List<Piece> m_PlayerRedPieces = new();
@@ -28,9 +26,6 @@ public class VisualGameManager : MonoBehaviour
 
     private void Start()
     {
-        m_PlayerBluePieces.ForEach(piece => { piece.OnGridOccupied += OnGridOccupied; piece.OnPieceGrabbed += OnPieceGrabbed; piece.OnPieceReleased += OnPieceReleased; });
-        m_PlayerRedPieces.ForEach(piece => { piece.OnGridOccupied += OnGridOccupied; piece.OnPieceGrabbed += OnPieceGrabbed; piece.OnPieceReleased += OnPieceReleased; });
-
         m_GameLogic.OnTurnStarted += OnTurnStarted;
         m_GameLogic.OnTurnEnded += OnTurnEnded;
         m_GameLogic.OnGameEnded += OnGameEnded;
@@ -47,8 +42,8 @@ public class VisualGameManager : MonoBehaviour
     private void OnDestroy()
     {
         // Pieces are gonna be destroyed by reloading the scene but keeping unsubscription for good practice
-        m_PlayerBluePieces.ForEach(piece => { piece.OnGridOccupied -= OnGridOccupied; piece.OnPieceGrabbed -= OnPieceGrabbed; });
-        m_PlayerRedPieces.ForEach(piece => { piece.OnGridOccupied -= OnGridOccupied; piece.OnPieceGrabbed -= OnPieceGrabbed; });
+        m_PlayerBluePieces.ForEach(piece => { piece.OnGridOccupied -= RequestFinishMove; piece.OnPieceGrabbed -= RequestStartMove; });
+        m_PlayerRedPieces.ForEach(piece => { piece.OnGridOccupied -= RequestFinishMove; piece.OnPieceGrabbed -= RequestStartMove; });
 
         m_GameLogic.OnTurnStarted -= OnTurnStarted;
         m_GameLogic.OnTurnEnded -= OnTurnEnded;
@@ -63,13 +58,13 @@ public class VisualGameManager : MonoBehaviour
         {
             EnableActivePieces(m_PlayerBluePieces, currentValidPieces);
             DisablePieces(m_PlayerRedPieces);
-            //m_BluePlayer.StartTurn();
+            m_BluePlayer.StartTurn(m_CurrentActivePieces);
         }
         else
         {
             EnableActivePieces(m_PlayerRedPieces, currentValidPieces);
             DisablePieces(m_PlayerBluePieces);
-            //m_RedPlayer.StartTurn();
+            m_RedPlayer.StartTurn(m_CurrentActivePieces);
         }
     }
 
@@ -105,20 +100,6 @@ public class VisualGameManager : MonoBehaviour
         }
     }
 
-    private void OnPieceGrabbed(Piece piece)
-    {
-        // Check valid tiles for selected piece & highlight valid ones
-        EPiece pieceType = piece.PieceType;
-        List<EGrid> validTiles = m_GameLogic.CheckValidTiles(pieceType);
-        DisableTiles(validTiles);
-
-        for (int i = 0; i < m_CurrentActivePieces.Count; i++)
-        {
-            Piece currentPiece = m_CurrentActivePieces[i];
-            currentPiece.ValidPieceRing.SetActive(false);
-        }
-    }
-
     private void DisableTiles(List<EGrid> validTiles)
     {
         // Grab all the tiles and disable the ones that are not in the validTiles
@@ -134,16 +115,34 @@ public class VisualGameManager : MonoBehaviour
         }
     }
 
-    private void OnGridOccupied(Piece piece, Dropzone targetZone)
+    public void RequestStartMove(Piece piece)
+    {
+        // Check valid tiles for selected piece & highlight valid ones
+        EPiece pieceType = piece.PieceType;
+        List<EGrid> validTiles = m_GameLogic.CheckValidTiles(pieceType);
+        DisableTiles(validTiles);
+
+        for (int i = 0; i < m_CurrentActivePieces.Count; i++)
+        {
+            Piece currentPiece = m_CurrentActivePieces[i];
+            currentPiece.ValidPieceRing.SetActive(false);
+        }
+    }
+
+    // Set piece on board and adjust the occupied cube colour
+    public void RequestFinishMove(Piece piece, Dropzone targetZone)
     {
         m_GameLogic.SetPieceOnBoard(piece.PieceType, targetZone.GridID);
 
         targetZone.NeutralCube.SetActive(false);
         targetZone.RedCube.SetActive(piece.PlayerID == EPlayerColour.Red);
         targetZone.BlueCube.SetActive(piece.PlayerID == EPlayerColour.Blue);
+
+        ResetVisualAids();
     }
 
-    private void OnPieceReleased()
+    // If the player dropped the piece outside of the board (or on invalid slot)
+    public void RequestCancelMove()
     {
         ResetVisualAids();
     }
@@ -152,11 +151,11 @@ public class VisualGameManager : MonoBehaviour
     {
         if (currentPlayer == EPlayerColour.Blue)
         {
-            //m_BluePlayer.EndTurn();
+            m_BluePlayer.EndTurn();
         }
         else
         {
-            //m_RedPlayer.EndTurn();
+            m_RedPlayer.EndTurn();
         }
     }
 

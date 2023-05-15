@@ -72,9 +72,8 @@ public class DragAndDrop : MonoBehaviour
         else
         {
             m_Rigidbody.position = m_StartPos;
+            OnDragEnded?.Invoke();
         }
-
-        OnDragEnded?.Invoke();
     }
 
     private void OnTriggerEnter(Collider other)

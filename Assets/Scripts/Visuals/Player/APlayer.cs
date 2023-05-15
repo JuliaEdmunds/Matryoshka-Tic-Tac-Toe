@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 public abstract class APlayer
 {
@@ -14,7 +15,7 @@ public abstract class APlayer
         PlayerColour = playerColour;
     }
 
-    public abstract void StartTurn();
+    public abstract void StartTurn(List<Piece> activePieces);
 
     public abstract void EndTurn();
 }
