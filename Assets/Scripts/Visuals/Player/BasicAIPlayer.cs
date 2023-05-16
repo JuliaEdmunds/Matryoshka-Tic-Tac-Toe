@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class BasicAIPlayer : AAIPlayer
@@ -8,30 +9,36 @@ public class BasicAIPlayer : AAIPlayer
     // TODO:
     // 1) Gather all available moves
     // 2) Randomly pick and play one
+    // 3) If there's guaranteed move to win then play it
 
     private List<Piece> m_ActivePieces;
 
-    private List<KeyValuePair<Piece, EGrid>> m_AllValidMoves = new();
+    private List<KeyValuePair<Piece, EGrid>> m_AllValidMoves;
 
     public override void StartTurn(List<Piece> activePieces)
     {
-        m_AllValidMoves.Clear();
-
-        m_ActivePieces = activePieces;
-
-        CheckPossibleMoves();
+        m_AllValidMoves = CheckPossibleMoves(activePieces);
 
         CoroutineManager.Instance.StartCoroutine(PlayPiece());
     }
 
     private IEnumerator PlayPiece()
     {
-        // Get random piece to move and the grid ID for the valid move
-        KeyValuePair<Piece, EGrid>  moveToMake = SelectRandomMove();
-        Piece piece = moveToMake.Key;
-        EGrid gridID = moveToMake.Value;
+        Piece piece = default;
+        EGrid gridID = default;
 
-        // Light up the board & wait to make move look more human
+        // Check if there's guaranteed move to win and if yes play it
+        // Otherwise, get random piece to move and the grid ID for the valid move
+        if (!TryFindWinningMove(m_AllValidMoves, ref piece, ref gridID))
+        {
+            KeyValuePair<Piece, EGrid> moveToMake = SelectRandomMove();
+            piece = moveToMake.Key;
+            gridID = moveToMake.Value;
+        }
+
+        yield return new WaitForSeconds(2);
+
+        // Light up the board & wait to make move to look more human
         m_VisualGameManager.RequestStartMove(piece);
 
         yield return new WaitForSeconds(1.5f);
@@ -47,23 +54,6 @@ public class BasicAIPlayer : AAIPlayer
     {
         int index = UnityEngine.Random.Range(0, m_AllValidMoves.Count);
         return m_AllValidMoves[index];
-    }
-
-    // Go thorugh the list of active pieces and check all valid moves
-    private void CheckPossibleMoves()
-    {
-        for (int i = 0; i < m_ActivePieces.Count; i++)
-        {
-            Piece currentPiece = m_ActivePieces[i];
-            EPiece pieceType = currentPiece.PieceType;
-            List<EGrid> validTiles = m_GameLogic.CheckValidTiles(pieceType);
-
-            for (int j = 0; j < validTiles.Count; j++)
-            {
-                EGrid currentGridID = validTiles[j];
-                m_AllValidMoves.Add(new KeyValuePair<Piece, EGrid>(currentPiece, currentGridID));
-            }
-        }
     }
 
     public override void EndTurn()

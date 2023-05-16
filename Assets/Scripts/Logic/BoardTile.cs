@@ -1,7 +1,7 @@
 ﻿using System;
 
 [Serializable]
-public class BoardTile
+public struct BoardTile
 {
     public EPlayerColour Player;
     public EPiece Piece;
@@ -11,4 +11,6 @@ public class BoardTile
         Player = player;
         Piece = piece;
     }
+
+    public bool IsEmpty() => Player == EPlayerColour.Invalid;
 }

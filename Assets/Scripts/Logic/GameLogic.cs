@@ -17,11 +17,9 @@ public class GameLogic
     private List<EPiece> m_PlayerBlueValidPieces = new();
     private List<EPiece> m_PlayerRedValidPPieces = new();
 
-    public BoardTile[] m_BoardTiles;
+    public BoardTile[] m_BoardTiles { get; private set; }
 
     private EGameState m_GameState;
-
-    private EPlayerColour m_Winner;
 
     public void StartGame()
     {
@@ -62,7 +60,7 @@ public class GameLogic
         for (int i = 0; i < m_BoardTiles.Length; i++)
         {
             BoardTile currentTile = m_BoardTiles[i];
-            if (currentTile == null)
+            if (currentTile.IsEmpty())
             {
                 continue;
             }
@@ -78,9 +76,9 @@ public class GameLogic
     }
 
     // Called from Visual Manager
-    public void SetPieceOnBoard(EPiece pieceType, EGrid zone)
+    public void SetPieceOnBoard(EPiece pieceType, EGrid tile)
     {
-        int tileIndex = (int)zone;
+        int tileIndex = (int)tile;
         m_BoardTiles[tileIndex] = new(CurrentPlayer, pieceType);
 
         CurrentPlayerValidPieces.Remove(pieceType);
@@ -92,7 +90,9 @@ public class GameLogic
     {
         OnTurnEnded?.Invoke(CurrentPlayer);
 
-        CheckWinner();
+        // Determine if there is a winner and if yes end game
+        GameSettings.Winner = BoardTileHelper.CheckWinner(m_BoardTiles);
+        m_GameState = GameSettings.Winner != EPlayerColour.Invalid ? EGameState.Over : EGameState.Playing;
 
         if (m_GameState != EGameState.Over)
         {
@@ -111,7 +111,7 @@ public class GameLogic
     private void CheckIfDraw()
     {
         // If there is already a winner early out
-        if (m_Winner != EPlayerColour.Invalid)
+        if (GameSettings.Winner != EPlayerColour.Invalid)
         {
             return;
         }
@@ -119,7 +119,7 @@ public class GameLogic
         // If neither player has pieces left it's a draw
         if (!m_PlayerBlueValidPieces.Any() && !m_PlayerRedValidPPieces.Any())
         {
-            m_Winner = EPlayerColour.Invalid;
+            GameSettings.Winner = EPlayerColour.Invalid;
             m_GameState = EGameState.Over;
             EndGame();
             return;
@@ -145,7 +145,7 @@ public class GameLogic
         // If turns skipped consecutively by both player trigger a draw
         if (m_NumSkipTurns >= 2)
         {
-            m_Winner = EPlayerColour.Invalid;
+            GameSettings.Winner = EPlayerColour.Invalid;
             m_GameState = EGameState.Over;
             EndGame();
             return;
@@ -155,64 +155,8 @@ public class GameLogic
         EndTurn();
     }
 
-    // Check if there's a winner in any of the rows/columns/diagonals
-    private void CheckWinner()
-    {
-        CheckRowForWinner(0);
-        CheckRowForWinner(1);
-        CheckRowForWinner(2);
-
-        CheckColumnForWinner(0);
-        CheckColumnForWinner(1);
-        CheckColumnForWinner(2);
-
-        CheckDiagonalForWinner(true);
-        CheckDiagonalForWinner(false);
-    }
-
-    private void CheckRowForWinner(int rowNum)
-    {
-        int startingTile = 3 * rowNum;
-        CheckTilesForWinner(startingTile, startingTile + 1, startingTile + 2);
-    }
-
-    private void CheckColumnForWinner(int columnNum)
-    {
-        CheckTilesForWinner(columnNum, columnNum + 3, columnNum + 6);
-    }
-
-    private void CheckDiagonalForWinner(bool isLeftDiagonal)
-    {
-        if (isLeftDiagonal)
-        {
-            CheckTilesForWinner(0, 4, 8);
-        }
-        else
-        {
-            CheckTilesForWinner(2, 4, 6);
-        }
-    }
-
-    private void CheckTilesForWinner(int tile1, int tile2, int tile3)
-    {
-        if (m_BoardTiles[tile1] == null || m_BoardTiles[tile2] == null || m_BoardTiles[tile3] == null)
-        {
-            return;
-        }
-
-        EPlayerColour? tileContent = m_BoardTiles[tile1].Player;
-
-        // Check if and if yes who is the winner
-        if (m_BoardTiles[tile2].Player == tileContent && m_BoardTiles[tile3].Player == tileContent)
-        {
-            m_Winner = tileContent == EPlayerColour.Blue ? EPlayerColour.Blue : EPlayerColour.Red;
-            m_GameState = EGameState.Over;
-        }
-    }
-
     private void EndGame()
     {
-        GameSettings.Winner = m_Winner;
-        OnGameEnded(m_Winner);
+        OnGameEnded(GameSettings.Winner);
     }
 }

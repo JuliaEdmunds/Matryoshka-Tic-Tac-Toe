@@ -134,11 +134,7 @@ public class VisualGameManager : MonoBehaviour
         List<EGrid> validTiles = m_GameLogic.CheckValidTiles(pieceType);
         DisableTiles(validTiles);
 
-        for (int i = 0; i < m_CurrentActivePieces.Count; i++)
-        {
-            Piece currentPiece = m_CurrentActivePieces[i];
-            currentPiece.ValidPieceRing.SetActive(false);
-        }
+        ResetVisualAidsOnActivePieces(false);
     }
 
     // Set piece on board and adjust the occupied cube colour
@@ -146,23 +142,28 @@ public class VisualGameManager : MonoBehaviour
     {
         Rigidbody pieceRb = piece.GetComponent<Rigidbody>();
         pieceRb.position = targetZone.transform.position;
-        m_GameLogic.SetPieceOnBoard(piece.PieceType, targetZone.GridID);
 
         targetZone.NeutralCube.SetActive(false);
         targetZone.RedCube.SetActive(piece.PlayerID == EPlayerColour.Red);
         targetZone.BlueCube.SetActive(piece.PlayerID == EPlayerColour.Blue);
 
-        ResetVisualAids();
+        ResetDropzoneVisualAids();
+        ResetVisualAidsOnActivePieces(false);
+
+        m_GameLogic.SetPieceOnBoard(piece.PieceType, targetZone.GridID);
     }
 
     // If the player dropped the piece outside of the board (or on invalid slot)
     public void RequestCancelMove()
     {
-        ResetVisualAids();
+        ResetDropzoneVisualAids();
+        ResetVisualAidsOnActivePieces(true);
     }
 
     private void OnTurnEnded(EPlayerColour currentPlayer)
     {
+        //ResetVisualAidsOnActivePieces(false);
+
         if (currentPlayer == EPlayerColour.Blue)
         {
             m_BluePlayer.EndTurn();
@@ -173,7 +174,7 @@ public class VisualGameManager : MonoBehaviour
         }
     }
 
-    private void ResetVisualAids()
+    private void ResetDropzoneVisualAids()
     {
         for (int i = 0; i < m_Dropzones.Count; i++)
         {
@@ -181,21 +182,27 @@ public class VisualGameManager : MonoBehaviour
 
             currentDropzone.ValidZoneRing.SetActive(false);
         }
+    }
 
+    private void ResetVisualAidsOnActivePieces(bool turnOn)
+    {
         for (int i = 0; i < m_CurrentActivePieces.Count; i++)
         {
             Piece currentPiece = m_CurrentActivePieces[i];
-            currentPiece.ValidPieceRing.SetActive(true);
+            currentPiece.ValidPieceRing.SetActive(turnOn);
         }
     }
 
     private void OnGameEnded(EPlayerColour winner)
     {
+        ResetVisualAidsOnActivePieces(false);
         StartCoroutine(ShowGameOverScreen(winner));
     }
 
     private IEnumerator ShowGameOverScreen(EPlayerColour winner)
     {
+        yield return new WaitForSeconds(2);
+
         if (winner != EPlayerColour.Invalid)
         {
             m_GameOverText.text = $"{winner} won";
