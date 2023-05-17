@@ -102,7 +102,7 @@ public class ScriptedTutorialPlayer : APlayer
     private void OnPieceReleased()
     {
         m_VisualGameManager.SetActivePiecesForCurrentPlayer(m_CurrentlyActivePiecesTypes);
-        m_VisualGameManager.DisableTiles(m_CurrentValidTiles);
+        m_VisualGameManager.ResetDropzoneVisualAids();
     }
 
     private void OnGridOccupied(Piece piece, Dropzone targetZone)

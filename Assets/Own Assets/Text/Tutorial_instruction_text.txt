@@ -2,7 +2,7 @@ Drag and drop the highlighted piece on the highlighted cube to place it on the b
 
 The opponent and you will alternate placing your pieces on the board throughout the game.
 
-Drag and drop the highlighted piece on the highlighted cube to crash your opponent's smaller piece. 
+Drag and drop the highlighted piece on the highlighted cube to crush your opponent's smaller piece (you can also crush your own pieces if you want to). 
 
 Now your opponent will make their move...
 

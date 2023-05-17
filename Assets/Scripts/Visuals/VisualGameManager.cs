@@ -234,7 +234,7 @@ public class VisualGameManager : MonoBehaviour
         }
     }
 
-    private void ResetDropzoneVisualAids()
+    public void ResetDropzoneVisualAids()
     {
         for (int i = 0; i < m_Dropzones.Count; i++)
         {
