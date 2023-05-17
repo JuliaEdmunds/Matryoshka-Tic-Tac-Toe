@@ -11,5 +11,6 @@ public enum EPlayerType
     Invalid,
     Human,
     BasicAI,
-    SmartAI
+    SmartAI,
+    Tutorial
 }

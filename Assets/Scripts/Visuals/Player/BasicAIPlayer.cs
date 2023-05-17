@@ -11,8 +11,6 @@ public class BasicAIPlayer : AAIPlayer
     // 2) Randomly pick and play one
     // 3) If there's guaranteed move to win then play it
 
-    private List<Piece> m_ActivePieces;
-
     private List<KeyValuePair<Piece, EGrid>> m_AllValidMoves;
 
     public override void StartTurn(List<Piece> activePieces)

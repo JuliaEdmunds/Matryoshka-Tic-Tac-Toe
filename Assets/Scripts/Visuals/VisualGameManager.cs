@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 using TMPro;
 using System;
+using System.IO;
 
 public class VisualGameManager : MonoBehaviour
 {
@@ -15,21 +16,35 @@ public class VisualGameManager : MonoBehaviour
     [Header("Board")]
     [SerializeField] private List<Dropzone> m_Dropzones = new();
 
+    [Header("Tutorial")]
+    [SerializeField] private GameObject m_TutorialScreen;
+    public GameObject TutorialScreen => m_TutorialScreen;
+    [SerializeField] private TextAsset m_TutorialTextFile;
+    [SerializeField] private TextMeshProUGUI m_TutorialText;
+
     [Header("Game Over")]
     [SerializeField] private GameObject m_GameOverScreen;
     [SerializeField] private TextMeshProUGUI m_GameOverText;
 
     private GameLogic m_GameLogic = new();
     private List<Piece> m_CurrentActivePieces = new();
-    
+    private string[] m_TextLines;
+
     private APlayer m_BluePlayer;
     private APlayer m_RedPlayer;
+    private bool m_HasPlayedTutorial; //TODO: update later on to rely on PlayerPrefs
 
     private void Start()
     {
         m_GameLogic.OnTurnStarted += OnTurnStarted;
         m_GameLogic.OnTurnEnded += OnTurnEnded;
         m_GameLogic.OnGameEnded += OnGameEnded;
+
+        if (!m_HasPlayedTutorial)
+        {
+            GameSettings.BluePlayer = EPlayerType.Tutorial;
+            GameSettings.RedPlayer = EPlayerType.Tutorial;
+        }
 
         m_BluePlayer = PlayerFactory.CreatePlayer(GameSettings.BluePlayer);
         m_RedPlayer = PlayerFactory.CreatePlayer(GameSettings.RedPlayer);
@@ -47,26 +62,56 @@ public class VisualGameManager : MonoBehaviour
         m_GameLogic.OnGameEnded -= OnGameEnded;
     }
 
+    int m_CurrentLineIndex = 0;
+    public IEnumerator ShowNextTutorialText()
+    {
+        m_TutorialScreen.SetActive(true);
+
+        if (m_TutorialTextFile != null)
+        {
+            m_TextLines = m_TutorialTextFile.text.Split("\r\n\r\n");
+        }
+
+        if (m_CurrentLineIndex >= m_TextLines.Length)
+        {
+            yield break;
+        }
+
+        string currentLine = m_TextLines[m_CurrentLineIndex];
+
+        for (int i = 0; i < currentLine.Length; i++)
+        {
+            string currentText = currentLine.Substring(0, i);
+            m_TutorialText.text = currentText;
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        m_CurrentLineIndex++;
+    }
+
     private void OnTurnStarted(EPlayerColour currentPlayer, List<EPiece> currentValidPieces)
     {
         m_CurrentActivePieces.Clear();
+        SetActivePiecesForCurrentPlayer(currentValidPieces);
 
         if (currentPlayer == EPlayerColour.Blue)
-        {
-            EnableActivePieces(m_PlayerBluePieces, currentValidPieces);
+        {     
             DisablePieces(m_PlayerRedPieces);
             m_BluePlayer.StartTurn(m_CurrentActivePieces);
         }
         else
         {
-            EnableActivePieces(m_PlayerRedPieces, currentValidPieces);
             DisablePieces(m_PlayerBluePieces);
             m_RedPlayer.StartTurn(m_CurrentActivePieces);
         }
     }
 
-    private void EnableActivePieces(List<Piece> allCurrentPlayerPieces, List<EPiece> currentPlayerActivePieces)
+    public void SetActivePiecesForCurrentPlayer(List<EPiece> currentPlayerActivePieces)
     {
+        List<Piece> allCurrentPlayerPieces = m_GameLogic.CurrentPlayer == EPlayerColour.Blue
+            ? m_PlayerBluePieces
+            : m_PlayerRedPieces;
+
         for (int i = 0; i < allCurrentPlayerPieces.Count; i++)
         {
             Piece currentPiece = allCurrentPlayerPieces[i];
@@ -87,7 +132,7 @@ public class VisualGameManager : MonoBehaviour
         }
     }
 
-    private void DisablePieces(List<Piece> all2ndPlayerPieces)
+    public void DisablePieces(List<Piece> all2ndPlayerPieces)
     {
         for (int i = 0; i < all2ndPlayerPieces.Count; i++)
         {
@@ -97,7 +142,7 @@ public class VisualGameManager : MonoBehaviour
         }
     }
 
-    private void DisableTiles(List<EGrid> validTiles)
+    public void DisableTiles(List<EGrid> validTiles)
     {
         // Grab all the tiles and disable the ones that are not in the validTiles
         for (int i = 0; i < m_Dropzones.Count; i++)
@@ -125,6 +170,21 @@ public class VisualGameManager : MonoBehaviour
         }
 
         throw new NotSupportedException($"GridID: {gridID} does not match any Dropzones");
+    }
+
+    public Piece GetPieceFromPieceType(EPiece pieceType)
+    {
+        for (int i = 0; i < m_CurrentActivePieces.Count; i++)
+        {
+            EPiece currentPieceType = m_CurrentActivePieces[i].PieceType;
+
+            if (currentPieceType == pieceType)
+            {
+                return m_CurrentActivePieces[i];
+            }
+        }
+
+        throw new NotSupportedException($"GridID: {pieceType} does not match any CurrentActivePieces");
     }
 
     public void RequestStartMove(Piece piece)
