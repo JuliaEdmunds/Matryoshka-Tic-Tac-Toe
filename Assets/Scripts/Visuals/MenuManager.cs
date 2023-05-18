@@ -21,6 +21,9 @@ public class MenuManager : MonoBehaviour
 
     [Header("Characters")]
     [SerializeField] private List<CharacterSlot> m_CharacterSlots;
+    [SerializeField] private List<Character> m_CharacterTypes;
+    [SerializeField] private ParticleSystem m_BlueRingParticleSystem;
+    [SerializeField] private ParticleSystem m_RedRingParticleSystem;
     [SerializeField] private GameObject m_BlueCrown;
     [SerializeField] private GameObject m_RedCrown;
 
@@ -41,38 +44,57 @@ public class MenuManager : MonoBehaviour
             currentCharSlot.OnCharacterTypeChanged += OnCharacterTypeChanged;
         }
 
+        m_CharacterTypes.ForEach(character => { character.OnCharacterGrabbed += OnCharacterGrabbed; character.OnCharacterReleased += OnCharacterReleased; });
+
         CheckForCrown();
+    }
+
+    private void OnCharacterGrabbed(Character character)
+    {
+        SetCharacterRings(false);
+        SetSlotRings(true);
+    }
+
+    private void OnCharacterReleased()
+    {
+        SetCharacterRings(true);
+        SetSlotRings(false);
     }
 
     private void LoadCharacter(CharacterSlot slot)
     {
         slot.LoadCharacter();
-        EnablePlayButton();
+        TryEnablePlayButton();
     }
 
     private void CheckForCrown()
     {
+        if (GameSettings.BluePlayer == EPlayerType.Invalid || GameSettings.BluePlayer == EPlayerType.Tutorial || GameSettings.RedPlayer == EPlayerType.Invalid || GameSettings.RedPlayer == EPlayerType.Tutorial)
+        {
+            return;
+        }
+
         m_BlueCrown.SetActive(GameSettings.Winner == EPlayerColour.Blue);
         m_RedCrown.SetActive(GameSettings.Winner == EPlayerColour.Red);
     }
 
-    private void OnCharacterTypeChanged(CharacterTypeHolder characterType, CharacterSlot characterSlot)
+    private void OnCharacterTypeChanged(EPlayerType characterType, CharacterSlot characterSlot)
     {
         if (characterSlot.PlayerColour == EPlayerColour.Blue)
         {
-            GameSettings.BluePlayer = characterType.CharacterType;
+            GameSettings.BluePlayer = characterType;
         }
         else
         {
-            GameSettings.RedPlayer = characterType.CharacterType;
+            GameSettings.RedPlayer = characterType;
         }
 
-        EnablePlayButton();
+        TryEnablePlayButton();
     }
 
-    private void EnablePlayButton()
+    private void TryEnablePlayButton()
     {
-        if (GameSettings.BluePlayer != EPlayerType.Invalid && GameSettings.RedPlayer != EPlayerType.Invalid)
+        if (GameSettings.BluePlayer != EPlayerType.Invalid && GameSettings.BluePlayer != EPlayerType.Tutorial && GameSettings.RedPlayer != EPlayerType.Invalid && GameSettings.RedPlayer != EPlayerType.Tutorial)
         {
             m_PlayButton.SetActive(true);
             m_Instructions.SetActive(false);
@@ -84,9 +106,37 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    private void SetCharacterRings(bool shouldTurnOn)
+    {
+        for (int i = 0; i < m_CharacterTypes.Count; i++)
+        {
+            Character currentCharacter = m_CharacterTypes[i];
+            currentCharacter.ValidPieceRing.SetActive(shouldTurnOn);
+        }
+    }
+
+    private void SetSlotRings(bool shouldTurnOn)
+    {
+        if (shouldTurnOn)
+        {
+            m_BlueRingParticleSystem.Play();
+            m_RedRingParticleSystem.Play();
+        }
+        else
+        {
+            m_BlueRingParticleSystem.Stop();
+            m_RedRingParticleSystem.Stop();
+        }
+    }
+
     public void LoadScene()
     {
         SceneController.ChangeScene(EScene.Main);
+    }
+
+    private void OnDestroy()
+    {
+        m_CharacterTypes.ForEach(character => { character.OnCharacterGrabbed -= OnCharacterGrabbed; character.OnCharacterReleased -= OnCharacterReleased; });
     }
 
     public void QuitGame()
