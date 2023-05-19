@@ -33,4 +33,14 @@ public class Character : MonoBehaviour
     {
         OnCharacterReleased?.Invoke();
     }
+
+    public void EnableDrag()
+    {
+        m_DragAndDrop.enabled = true;
+    }
+
+    public void DisableDrag()
+    {
+        m_DragAndDrop.enabled = false;
+    }
 }

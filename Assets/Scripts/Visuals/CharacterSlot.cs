@@ -14,7 +14,7 @@ public class CharacterSlot : MonoBehaviour
 
     private GameObject m_CurrentOpponent;
 
-    public event Action<EPlayerType, CharacterSlot> OnCharacterTypeChanged;
+    public static event Action<EPlayerType, CharacterSlot> OnCharacterTypeChanged;
 
     private void OnTriggerEnter(Collider opponent)
     {
@@ -78,6 +78,7 @@ public class CharacterSlot : MonoBehaviour
 
             if (characterType == currentCharacterType)
             {
+                m_CurrentOpponent = currentCharacter.gameObject;
                 GameObject characterToShow = currentCharacter.gameObject;
                 characterToShow.SetActive(true);
             }

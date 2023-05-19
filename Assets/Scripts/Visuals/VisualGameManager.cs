@@ -32,7 +32,6 @@ public class VisualGameManager : MonoBehaviour
 
     private APlayer m_BluePlayer;
     private APlayer m_RedPlayer;
-    private bool m_HasPlayedTutorial; //TODO: update later on to rely on PlayerPrefs
 
     private void Start()
     {
@@ -40,7 +39,7 @@ public class VisualGameManager : MonoBehaviour
         m_GameLogic.OnTurnEnded += OnTurnEnded;
         m_GameLogic.OnGameEnded += OnGameEnded;
 
-        if (!m_HasPlayedTutorial)
+        if (!TutorialHelper.HasCompletedTutorial)
         {
             GameSettings.BluePlayer = EPlayerType.Tutorial;
             GameSettings.RedPlayer = EPlayerType.Tutorial;
@@ -120,6 +119,10 @@ public class VisualGameManager : MonoBehaviour
             bool isActivePiece = currentPlayerActivePieces.Contains(currentPieceType);
             if (isActivePiece)
             {
+                if (true)
+                {
+
+                }
                 currentPiece.EnableDrag();
                 m_CurrentActivePieces.Add(currentPiece);
             }

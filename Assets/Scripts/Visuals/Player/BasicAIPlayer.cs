@@ -15,6 +15,12 @@ public class BasicAIPlayer : AAIPlayer
 
     public override void StartTurn(List<Piece> activePieces)
     {
+        for (int i = 0; i < activePieces.Count; i++)
+        {
+            Piece currentPiece = activePieces[i];
+            currentPiece.DisableDrag();
+        }
+
         m_AllValidMoves = CheckPossibleMoves(activePieces);
 
         CoroutineManager.Instance.StartCoroutine(PlayPiece());

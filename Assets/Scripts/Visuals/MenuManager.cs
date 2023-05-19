@@ -1,13 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.Timeline;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
@@ -19,13 +16,20 @@ public class MenuManager : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioSource m_AudioSource;
 
+    [Header("Tutorial")]
+    [SerializeField] private TutorialManager m_TutorialManager;
+
     [Header("Characters")]
     [SerializeField] private List<CharacterSlot> m_CharacterSlots;
+    public List<CharacterSlot> CharacterSlots => m_CharacterSlots;
+
     [SerializeField] private List<Character> m_CharacterTypes;
+    public List<Character> CharacterTypes => m_CharacterTypes;
     [SerializeField] private ParticleSystem m_BlueRingParticleSystem;
     [SerializeField] private ParticleSystem m_RedRingParticleSystem;
     [SerializeField] private GameObject m_BlueCrown;
     [SerializeField] private GameObject m_RedCrown;
+
 
     private void Start()
     {
@@ -41,12 +45,18 @@ public class MenuManager : MonoBehaviour
         {
             CharacterSlot currentCharSlot = m_CharacterSlots[i];
             LoadCharacter(currentCharSlot);
-            currentCharSlot.OnCharacterTypeChanged += OnCharacterTypeChanged;
         }
+
+        CharacterSlot.OnCharacterTypeChanged += OnCharacterTypeChanged;
 
         m_CharacterTypes.ForEach(character => { character.OnCharacterGrabbed += OnCharacterGrabbed; character.OnCharacterReleased += OnCharacterReleased; });
 
         CheckForCrown();
+
+        if (!TutorialHelper.HasCompletedTutorial)
+        {
+            m_TutorialManager.StartTutorial();
+        }
     }
 
     private void OnCharacterGrabbed(Character character)
@@ -108,6 +118,13 @@ public class MenuManager : MonoBehaviour
 
     private void SetCharacterRings(bool shouldTurnOn)
     {
+        if (!TutorialHelper.HasCompletedTutorial)
+        {
+            Character currentCharacter = m_TutorialManager.CurrentTutorialCharacter;
+            currentCharacter.ValidPieceRing.SetActive(shouldTurnOn);
+            return;
+        }
+
         for (int i = 0; i < m_CharacterTypes.Count; i++)
         {
             Character currentCharacter = m_CharacterTypes[i];
@@ -131,11 +148,13 @@ public class MenuManager : MonoBehaviour
 
     public void LoadScene()
     {
+        m_TutorialManager.TutorialScreen.SetActive(false);
         SceneController.ChangeScene(EScene.Main);
     }
 
     private void OnDestroy()
     {
+        CharacterSlot.OnCharacterTypeChanged -= OnCharacterTypeChanged;
         m_CharacterTypes.ForEach(character => { character.OnCharacterGrabbed -= OnCharacterGrabbed; character.OnCharacterReleased -= OnCharacterReleased; });
     }
 

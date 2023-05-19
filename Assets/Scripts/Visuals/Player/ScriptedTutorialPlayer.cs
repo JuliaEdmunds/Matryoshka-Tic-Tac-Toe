@@ -24,6 +24,11 @@ public class ScriptedTutorialPlayer : APlayer
 
     private IEnumerator ExecuteTurn()
     {
+        if (m_RoundCounter == 0 && PlayerColour == EPlayerColour.Blue)
+        {
+            yield return new WaitForSeconds(1.5f);
+        }
+
         yield return m_VisualGameManager.ShowNextTutorialText();
 
         if (PlayerColour == EPlayerColour.Blue)
@@ -108,6 +113,12 @@ public class ScriptedTutorialPlayer : APlayer
     private void OnGridOccupied(Piece piece, Dropzone targetZone)
     {
         m_VisualGameManager.RequestFinishMove(piece, targetZone);
+
+        // Mark that the player completed tutorial on the last round
+        if (m_RoundCounter == 3)
+        {
+            TutorialHelper.HasCompletedTutorial = true;
+        }
     }
 
     private IEnumerator MakeAIMove(EPiece pieceType, EGrid gridID)
@@ -115,10 +126,15 @@ public class ScriptedTutorialPlayer : APlayer
         m_CurrentlyActivePiecesTypes.Clear();
         m_CurrentlyActivePiecesTypes.Add(pieceType);
         m_VisualGameManager.SetActivePiecesForCurrentPlayer(m_CurrentlyActivePiecesTypes);
+        Piece piece = m_VisualGameManager.GetPieceFromPieceType(pieceType);
+
+        for (int i = 0; i < m_CurrentlyActivePiecesTypes.Count; i++)
+        {
+            piece.DisableDrag();
+        }
 
         yield return new WaitForSeconds(1.5f);
-        // Light up the board & wait to make move to look more human
-        Piece piece = m_VisualGameManager.GetPieceFromPieceType(pieceType);
+        // Light up the board & wait to make move to look more human  
         m_VisualGameManager.RequestStartMove(piece);
 
         // Get the dropzone from gridID
@@ -132,7 +148,7 @@ public class ScriptedTutorialPlayer : APlayer
     {
         if (PlayerColour == EPlayerColour.Blue)
         {
-            m_CurrentlyActivePieces.ForEach(piece => { piece.OnGridOccupied -= OnGridOccupied; piece.OnPieceGrabbed -= OnPieceGrabbed; piece.OnPieceReleased -= OnPieceReleased; });
+            m_CurrentlyActivePieces.ForEach(piece => { piece.DisableDrag(); piece.OnGridOccupied -= OnGridOccupied; piece.OnPieceGrabbed -= OnPieceGrabbed; piece.OnPieceReleased -= OnPieceReleased; });
         }
 
         if (m_Coroutine != null)
