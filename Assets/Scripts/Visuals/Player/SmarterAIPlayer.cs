@@ -18,12 +18,16 @@ public class SmarterAIPlayer : AAIPlayer
 
     // TODO: SmartAI to be created => for now it's a copy paste of BasicAI - just not to crash the game
 
-    private List<Piece> m_ActivePieces;
-
     private List<KeyValuePair<Piece, EGrid>> m_AllValidMoves;
 
     public override void StartTurn(List<Piece> activePieces)
     {
+        for (int i = 0; i < activePieces.Count; i++)
+        {
+            Piece currentPiece = activePieces[i];
+            currentPiece.DisableDrag();
+        }
+
         m_AllValidMoves = CheckPossibleMoves(activePieces);
 
         CoroutineManager.Instance.StartCoroutine(PlayPiece());

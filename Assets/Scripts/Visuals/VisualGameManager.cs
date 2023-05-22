@@ -6,6 +6,10 @@ using System.Linq;
 using TMPro;
 using System;
 using System.IO;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization.Settings;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using System.Reflection;
 
 public class VisualGameManager : MonoBehaviour
 {
@@ -25,6 +29,7 @@ public class VisualGameManager : MonoBehaviour
     [Header("Game Over")]
     [SerializeField] private GameObject m_GameOverScreen;
     [SerializeField] private TextMeshProUGUI m_GameOverText;
+    [SerializeField] private LocalizeStringEvent m_LocalizeStringEvent;
 
     private GameLogic m_GameLogic = new();
     private List<Piece> m_CurrentActivePieces = new();
@@ -65,20 +70,23 @@ public class VisualGameManager : MonoBehaviour
     public IEnumerator ShowNextTutorialText()
     {
         m_TutorialScreen.SetActive(true);
+        string currentLine = string.Empty;
 
-        if (m_TutorialTextFile != null)
-        {
-            m_TextLines = m_TutorialTextFile.text.Split("\r\n\r\n");
-        }
-
-        if (m_CurrentLineIndex >= m_TextLines.Length)
+        if (m_CurrentLineIndex >= 5)
         {
             yield break;
         }
 
-        string currentLine = m_TextLines[m_CurrentLineIndex];
+        var op = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("TextTable", $"GameplayInstruction{m_CurrentLineIndex}");
 
-        for (int i = 0; i < currentLine.Length; i++)
+        while(!op.IsDone)
+        {
+            yield return null;
+        }
+
+        currentLine = op.Result;
+
+        for (int i = 0; i <= currentLine.Length; i++)
         {
             string currentText = currentLine.Substring(0, i);
             m_TutorialText.text = currentText;
@@ -94,7 +102,7 @@ public class VisualGameManager : MonoBehaviour
         SetActivePiecesForCurrentPlayer(currentValidPieces);
 
         if (currentPlayer == EPlayerColour.Blue)
-        {     
+        {
             DisablePieces(m_PlayerRedPieces);
             m_BluePlayer.StartTurn(m_CurrentActivePieces);
         }
@@ -268,19 +276,33 @@ public class VisualGameManager : MonoBehaviour
 
         if (winner != EPlayerColour.Invalid)
         {
-            m_GameOverText.text = $"{winner} won";
+            string winnerKey = winner.ToString();
+            var op = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("TextTable", $"{winnerKey}PlayerWon");
+            if (op.IsDone)
+            {
+                m_GameOverText.text = $"{op.Result}";
+            }
+            else
+            {
+                op.Completed += OnGameOverLocalisedStringProcessed;
+            }     
             m_GameOverText.color = winner == EPlayerColour.Blue ? Color.blue : Color.red;
         }
         else
         {
             m_GameOverText.text = "It's a draw...";
         }
-        
+
         m_GameOverScreen.SetActive(true);
 
         yield return new WaitForSeconds(2);
 
         BackToMenu();
+    }
+
+    private void OnGameOverLocalisedStringProcessed(AsyncOperationHandle<string> op)
+    {
+        m_GameOverText.text = $"{op.Result}";
     }
 
     public void BackToMenu()

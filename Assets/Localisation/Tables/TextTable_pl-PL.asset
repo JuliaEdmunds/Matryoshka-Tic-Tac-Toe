@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: TextTable_pl-PL
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: pl-PL
+  m_SharedData: {fileID: 11400000, guid: 2416f9674a1495141813f662d8bd2224, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 14534270976
+    m_Localized: "Cz\u0142owiek"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 761107800064
+    m_Localized: "Komputer (\u0142atwy)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1050082762752
+    m_Localized: Komputer (trudny)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1233810055168
+    m_Localized: "Przenie\u015B posta\u0107 na piedesta\u0142"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6399711993856
+    m_Localized: Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1697586831360
+    m_Localized: "Witaj w grze Matrioszka K\xF3\u0142ko i Krzy\u017Cyk! Aby rozpocz\u0105\u0107
+      gr\u0119, musisz najpierw wybra\u0107 role. Przeci\u0105gnij Cz\u0142owieka
+      na niebieski piedesta\u0142."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6299111612416
+    m_Localized: "Ekstra! Teraz wybierz Komputer (\u0142atwy) jako przeciwnika i
+      przeci\u0105gnij go na czerwony piedesta\u0142."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6301443645440
+    m_Localized: "Super! Teraz mo\u017Cesz klikn\u0105\u0107 przycisk \"Start\" \u017Ceby
+      przej\u015B\u0107 do dalszej cz\u0119\u015Bci  instrukcji."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24959981150208
+    m_Localized: "Niebieski gracz wygra\u0142"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25005778755584
+    m_Localized: "Czerwony gracz wygra\u0142"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 58634001145856
+    m_Localized: "Przenie\u015B pod\u015Bwietlon\u0105 matrioszk\u0119 na pod\u015Bwietlone
+      miejsce na planszy. Po umieszczeniu na planszy nie mo\u017Cna jej ponownie
+      przenie\u015B\u0107.\_"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60364784885760
+    m_Localized: "Ty i Tw\xF3j przeciwnik b\u0119dziecie na zmian\u0119 umieszcza\u0107
+      matrioszki na planszy."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60690963324928
+    m_Localized: "Przenie\u015B pod\u015Bwietlon\u0105 matrioszk\u0119 na pod\u015Bwietlone
+      miejsce na planszy, aby zmia\u017Cd\u017Cy\u0107\_mniejsz\u0105 matrioszk\u0119
+      przeciwnika (mo\u017Cesz te\u017C mia\u017Cd\u017Cy\u0107 swoje\_matrioszki)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61673097355264
+    m_Localized: Teraz czas na ruch Twojego przeciwnika...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61833021972480
+    m_Localized: "Gracz, kt\xF3ry umie\u015Bci trzy swoje pionki w rz\u0119dzie (poziomo,
+      pionowo lub uko\u015Bnie), wygrywa gr\u0119. \u015Amia\u0142o umie\u015B\u0107
+      swoj\u0105 matrioszk\u0119 na planszy, aby wygra\u0107!"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

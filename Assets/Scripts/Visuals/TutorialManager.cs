@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.Localization.Settings;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -79,27 +79,35 @@ public class TutorialManager : MonoBehaviour
     public IEnumerator ShowNextTutorialText()
     {
         m_TutorialScreen.SetActive(true);
+        string currentLine = string.Empty;
 
-        if (m_TutorialTextFile != null)
-        {
-            m_TextLines = m_TutorialTextFile.text.Split("\r\n\r\n");
-        }
-
-        if (m_CurrentRoundOfMoves >= m_TextLines.Length)
+        if (m_CurrentRoundOfMoves >= 3)
         {
             yield break;
+        }        
+
+        var op = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("TextTable", $"MenuInstruction{m_CurrentRoundOfMoves}");
+        
+        while (!op.IsDone)
+        {
+            yield return null;   
         }
 
-        string currentLine = m_TextLines[m_CurrentRoundOfMoves];
+        currentLine = op.Result;
+        yield return PrintText(currentLine);
+    }
 
-        for (int i = 0; i < currentLine.Length; i++)
+    private IEnumerator PrintText(string line)
+    {
+        for (int i = 0; i <= line.Length; i++)
         {
-            string currentText = currentLine.Substring(0, i);
+            string currentText = line.Substring(0, i);
             m_TutorialText.text = currentText;
             yield return new WaitForSeconds(0.01f);
         }
     }
 
+#pragma warning disable CS0618 // Type or member is obsolete
     private void FirstTutorialStep()
     {
         m_HasCompletedStep = false;
@@ -129,8 +137,10 @@ public class TutorialManager : MonoBehaviour
         // Don't enable any characters just wait fot the player to press play
         m_BlueRingParticleSystem.enableEmission = false;
         m_RedRingParticleSystem.enableEmission = false;
+
         DisableAllCharacters();
     }
+#pragma warning restore CS0618 // Type or member is obsolete
 
     private void EnableCharacter(EPlayerType characterType)
     {
