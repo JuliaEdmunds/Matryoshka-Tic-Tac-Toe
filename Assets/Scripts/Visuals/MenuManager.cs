@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
@@ -13,8 +14,9 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject m_PlayButton;
     [SerializeField] private GameObject m_Instructions;
 
-    [Header("Audio")]
-    [SerializeField] private AudioSource m_AudioSource;
+    [Header("Settings")]
+    [SerializeField] private GameObject m_SettingsButton;
+    [SerializeField] private GameObject m_SettingsScreen;
 
     [Header("Tutorial")]
     [SerializeField] private TutorialManager m_TutorialManager;
@@ -150,6 +152,11 @@ public class MenuManager : MonoBehaviour
     {
         m_TutorialManager.TutorialScreen.SetActive(false);
         SceneController.ChangeScene(EScene.Main);
+    }
+
+    public void OpenSettings()
+    {
+        m_SettingsScreen.SetActive(true);
     }
 
     private void OnDestroy()

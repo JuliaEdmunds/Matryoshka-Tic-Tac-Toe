@@ -25,7 +25,6 @@ public class TutorialManager : MonoBehaviour
     [Header("Scripts")]
     [SerializeField] private MenuManager m_MenuManager;
 
-    private string[] m_TextLines;
     private int m_CurrentRoundOfMoves;
     private List<Character> m_CharacterTypes;
     private Character m_CurrentCharacter;
@@ -79,7 +78,6 @@ public class TutorialManager : MonoBehaviour
     public IEnumerator ShowNextTutorialText()
     {
         m_TutorialScreen.SetActive(true);
-        string currentLine = string.Empty;
 
         if (m_CurrentRoundOfMoves >= 3)
         {
@@ -93,7 +91,7 @@ public class TutorialManager : MonoBehaviour
             yield return null;   
         }
 
-        currentLine = op.Result;
+        string currentLine = op.Result;
         yield return PrintText(currentLine);
     }
 
