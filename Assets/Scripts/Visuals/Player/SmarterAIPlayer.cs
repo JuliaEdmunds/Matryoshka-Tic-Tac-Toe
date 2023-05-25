@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SmarterAIPlayer : AAIPlayer
@@ -9,15 +10,9 @@ public class SmarterAIPlayer : AAIPlayer
     // 2) If there's guaranteed move to win then play it 
     // 3) If possible place piece on the opponents piece otherwise place weakest piece in random position
 
-    // For smarter AI, there is a BoardTiles[] (array) required with the current state of the game
-    // + need to move CheckWInner functions from GameLogic to a helper class which takes BoardTiles[]
-    // GameLogic still needs to call the functions (the ones in HelperClass) to check if there's a winner
-    // helper class serves GameLogic to decide on score and support SmartAI to make the "more sensible" move
-    // helper class also needs to have BoardTile[] Clone(BoardTiles[] originalTiles) to determine a move at the turn's start 
-
-
     // TODO: SmartAI to be created => for now it's a copy paste of BasicAI - just not to crash the game
 
+    private Dropzone m_CurrentTargetZone;
     private List<KeyValuePair<Piece, EGrid>> m_AllValidMoves;
 
     public override void StartTurn(List<Piece> activePieces)
@@ -39,12 +34,16 @@ public class SmarterAIPlayer : AAIPlayer
         EGrid gridID = default;
 
         // Check if there's guaranteed move to win and if yes play it
-        // Otherwise, get random piece to move and the grid ID for the valid move
+        // If no guaranteed win and if possible place piece on the opponent's piece
+        // Otherwise place weakest piece in random position
         if (!TryFindWinningMove(m_AllValidMoves, ref piece, ref gridID))
         {
-            KeyValuePair<Piece, EGrid> moveToMake = SelectRandomMove();
-            piece = moveToMake.Key;
-            gridID = moveToMake.Value;
+            if (!TryCrushOpponent(ref piece, ref gridID))
+            {
+                KeyValuePair<Piece, EGrid> moveToMake = SelectRandomMove();
+                piece = moveToMake.Key;
+                gridID = moveToMake.Value;
+            }   
         }
 
         yield return new WaitForSeconds(2);
@@ -55,20 +54,49 @@ public class SmarterAIPlayer : AAIPlayer
         yield return new WaitForSeconds(1.5f);
 
         // Get the dropzone from gridID
-        Dropzone targetZone = m_VisualGameManager.GetDropzoneFromGridID(gridID);
+        m_CurrentTargetZone = m_VisualGameManager.GetDropzoneFromGridID(gridID);
 
         // Place the piece on board
-        m_VisualGameManager.RequestFinishMove(piece, targetZone);
+        m_VisualGameManager.RequestFinishMove(piece, m_CurrentTargetZone);
+    }
+
+    private bool TryCrushOpponent(ref Piece piece, ref EGrid tile)
+    {
+        BoardTile[] originalBoard = m_GameLogic.m_BoardTiles;
+
+        m_AllValidMoves.Shuffle();
+
+        for (int i = 0; i < m_AllValidMoves.Count; i++)
+        {
+            BoardTile[] checkBoard = originalBoard.CloneBoard();
+
+            Piece currentPiece = m_AllValidMoves[i].Key;
+            EGrid currentTile = m_AllValidMoves[i].Value;
+
+            int tileIndex = (int)currentTile;
+            BoardTile currentBoardtile = checkBoard[tileIndex];
+            
+            // From valid move try to find a tile with opponent's piece on it
+            if (!currentBoardtile.IsEmpty() && currentBoardtile.Player != PlayerColour)
+            {
+                piece = currentPiece;
+                tile = currentTile;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private KeyValuePair<Piece, EGrid> SelectRandomMove()
     {
-        int index = UnityEngine.Random.Range(0, m_AllValidMoves.Count);
+        int index = Random.Range(0, m_AllValidMoves.Count);
         return m_AllValidMoves[index];
     }
 
     public override void EndTurn()
     {
-        Debug.Log("AI finished move");
+        m_CurrentTargetZone.DropzoneRingHelper.RingOff();
+        m_CurrentTargetZone = null;
     }
 }
