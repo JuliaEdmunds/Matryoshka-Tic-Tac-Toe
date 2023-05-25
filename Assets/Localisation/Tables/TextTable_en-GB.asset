@@ -88,6 +88,14 @@ MonoBehaviour:
       board to win!
     m_Metadata:
       m_Items: []
+  - m_Id: 777270290505728
+    m_Localized: Exit Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 778723147079680
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

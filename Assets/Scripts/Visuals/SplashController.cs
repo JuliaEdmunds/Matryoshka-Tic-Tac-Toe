@@ -5,17 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class SplashController : MonoBehaviour
 {
-    private const string MENU_SCENE = "Menu";
-
     void Start()
     {
-        StartCoroutine(LoadMenu());
+        StartCoroutine(LoadScene());
     }
 
-    private IEnumerator LoadMenu()
+    private IEnumerator LoadScene()
     {
         yield return new WaitForSeconds(3);
 
-        SceneManager.LoadScene(MENU_SCENE);
+        EScene sceneToLoad = LanguageHelper.HasChosenLanguage ? EScene.Menu : EScene.LanguageSettings;
+        SceneManager.LoadScene(sceneToLoad.ToString());
     }
 }

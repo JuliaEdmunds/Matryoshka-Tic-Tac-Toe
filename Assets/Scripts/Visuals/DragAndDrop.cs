@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DragAndDrop : MonoBehaviour
 {
@@ -48,7 +49,7 @@ public class DragAndDrop : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (m_Plane.Raycast(ray, out float distance))
+        if (m_Plane.Raycast(ray, out float distance)) // && !EventSystem.current.IsPointerOverGameObject()
         {
             m_Rigidbody.position = ray.GetPoint(distance);
         }
@@ -76,21 +77,23 @@ public class DragAndDrop : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Dropzone currentDropzone = other.gameObject.GetComponent<Dropzone>();
+        Dropzone dropzone = other.gameObject.GetComponent<Dropzone>();
 
-        if (currentDropzone != null && currentDropzone.enabled) 
+        if (dropzone != null && dropzone.enabled) 
         {
-            m_OccupiedDropzones.Add(currentDropzone);
+            m_OccupiedDropzones.Add(dropzone);
+            dropzone.DropzoneRingHelper.TargerRingOn();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Dropzone currentDropzone = other.gameObject.GetComponent<Dropzone>();
+        Dropzone dropzone = other.gameObject.GetComponent<Dropzone>();
 
-        if (currentDropzone != null && currentDropzone.enabled)
+        if (dropzone != null && dropzone.enabled)
         {
-            m_OccupiedDropzones.Remove(currentDropzone);
+            m_OccupiedDropzones.Remove(dropzone);
+           dropzone.DropzoneRingHelper.ValidRingOn();
         }
     }
 }

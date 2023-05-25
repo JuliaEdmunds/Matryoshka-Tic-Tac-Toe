@@ -29,11 +29,9 @@ public class VisualGameManager : MonoBehaviour
     [Header("Game Over")]
     [SerializeField] private GameObject m_GameOverScreen;
     [SerializeField] private TextMeshProUGUI m_GameOverText;
-    [SerializeField] private LocalizeStringEvent m_LocalizeStringEvent;
 
     private GameLogic m_GameLogic = new();
     private List<Piece> m_CurrentActivePieces = new();
-    private string[] m_TextLines;
 
     private APlayer m_BluePlayer;
     private APlayer m_RedPlayer;
@@ -79,7 +77,7 @@ public class VisualGameManager : MonoBehaviour
 
         var op = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("TextTable", $"GameplayInstruction{m_CurrentLineIndex}");
 
-        while(!op.IsDone)
+        while (!op.IsDone)
         {
             yield return null;
         }
@@ -153,18 +151,25 @@ public class VisualGameManager : MonoBehaviour
         }
     }
 
-    public void DisableTiles(List<EGrid> validTiles)
+    public void EnableValidTiles(List<EGrid> validTiles)
     {
-        // Grab all the tiles and disable the ones that are not in the validTiles
+        // Grab all the tiles, disable the ones that are not in the validTiles, otherwise set as valid
         for (int i = 0; i < m_Dropzones.Count; i++)
         {
             Dropzone currentTile = m_Dropzones[i];
             EGrid currentTilePos = currentTile.GridID;
 
             bool isValidTile = validTiles.Contains(currentTilePos);
-
             currentTile.enabled = isValidTile;
-            currentTile.ValidZoneRing.SetActive(isValidTile);
+
+            if (isValidTile)
+            {
+                currentTile.DropzoneRingHelper.ValidRingOn();
+            }
+            else
+            {
+                currentTile.DropzoneRingHelper.RingOff();
+            }  
         }
     }
 
@@ -203,7 +208,7 @@ public class VisualGameManager : MonoBehaviour
         // Check valid tiles for selected piece & highlight valid ones
         EPiece pieceType = piece.PieceType;
         List<EGrid> validTiles = m_GameLogic.CheckValidTiles(pieceType);
-        DisableTiles(validTiles);
+        EnableValidTiles(validTiles);
 
         ResetVisualAidsOnActivePieces(false);
     }
@@ -211,15 +216,25 @@ public class VisualGameManager : MonoBehaviour
     // Set piece on board and adjust the occupied cube colour
     public void RequestFinishMove(Piece piece, Dropzone targetZone)
     {
+        StartCoroutine(DoRequestFinishMove(piece, targetZone));
+    }
+
+    private IEnumerator DoRequestFinishMove(Piece piece, Dropzone targetZone)
+    {
         Rigidbody pieceRb = piece.GetComponent<Rigidbody>();
         pieceRb.position = targetZone.transform.position;
+
+        // TODO: Here goes the animation (crushing, moving, etc.)
+        yield return null;
 
         targetZone.NeutralCube.SetActive(false);
         targetZone.RedCube.SetActive(piece.PlayerID == EPlayerColour.Red);
         targetZone.BlueCube.SetActive(piece.PlayerID == EPlayerColour.Blue);
 
-        ResetDropzoneVisualAids();
         ResetVisualAidsOnActivePieces(false);
+        ResetDropzoneVisualAids();
+
+        yield return null;
 
         m_GameLogic.SetPieceOnBoard(piece.PieceType, targetZone.GridID);
     }
@@ -227,8 +242,19 @@ public class VisualGameManager : MonoBehaviour
     // If the player dropped the piece outside of the board (or on invalid slot)
     public void RequestCancelMove()
     {
-        ResetDropzoneVisualAids();
+        StartCoroutine(DoRequestCancelMove());
+    }
+
+    private IEnumerator DoRequestCancelMove()
+    {
+        // Ensure that the piece exists the trigger zone before reseting
+        yield return null;
+
         ResetVisualAidsOnActivePieces(true);
+
+        yield return null;
+
+        ResetDropzoneVisualAids();
     }
 
     private void OnTurnEnded(EPlayerColour currentPlayer)
@@ -250,8 +276,7 @@ public class VisualGameManager : MonoBehaviour
         for (int i = 0; i < m_Dropzones.Count; i++)
         {
             Dropzone currentDropzone = m_Dropzones[i];
-
-            currentDropzone.ValidZoneRing.SetActive(false);
+            currentDropzone.DropzoneRingHelper.RingOff();
         }
     }
 
@@ -285,7 +310,7 @@ public class VisualGameManager : MonoBehaviour
             else
             {
                 op.Completed += OnGameOverLocalisedStringProcessed;
-            }     
+            }
             m_GameOverText.color = winner == EPlayerColour.Blue ? Color.blue : Color.red;
         }
         else

@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class BasicAIPlayer : AAIPlayer
 {
+    private Dropzone m_CurrentTargetZone;
+
     // TODO:
     // 1) Gather all available moves
     // 2) Randomly pick and play one
@@ -48,10 +50,10 @@ public class BasicAIPlayer : AAIPlayer
         yield return new WaitForSeconds(1.5f);
 
         // Get the dropzone from gridID
-        Dropzone targetZone = m_VisualGameManager.GetDropzoneFromGridID(gridID);
+        m_CurrentTargetZone = m_VisualGameManager.GetDropzoneFromGridID(gridID);
 
         // Place the piece on board
-        m_VisualGameManager.RequestFinishMove(piece, targetZone);
+        m_VisualGameManager.RequestFinishMove(piece, m_CurrentTargetZone);
     }
 
     private KeyValuePair<Piece, EGrid> SelectRandomMove()
@@ -62,6 +64,7 @@ public class BasicAIPlayer : AAIPlayer
 
     public override void EndTurn()
     {
-        Debug.Log("AI finished move");
+        m_CurrentTargetZone.DropzoneRingHelper.RingOff();
+        m_CurrentTargetZone = null;
     }
 }

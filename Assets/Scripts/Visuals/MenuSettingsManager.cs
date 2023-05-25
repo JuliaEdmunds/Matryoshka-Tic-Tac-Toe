@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class MenuSettingsManager : MonoBehaviour
 {
     private const string VOLUME_PREF_KEY = "NA.Volume";
-    private const string LANGUAGE_PREF_KEY = "NA.Language";
+    //private const string LANGUAGE_PREF_KEY = "NA.Language";
 
     [Header("Buttons")]
     [SerializeField] private GameObject m_BackButton;
@@ -42,25 +42,25 @@ public class MenuSettingsManager : MonoBehaviour
         m_AudioSource.Play();
     }
 
-    public void SetEnglish() => SetLocale(ELanguage.English);
+    //public void SetEnglish() => LanguageHelper.SetLocale(ELanguage.English);
+    //
+    //public void SetPolish() => LanguageHelper.SetLocale(ELanguage.English);
 
-    public void SetPolish() => SetLocale(ELanguage.Polish);
-
-    private void SetLocale(ELanguage locale)
+    public void ChangeLocale()
     {
-        StartCoroutine(SetLocale((int)locale));
-    }
-
-    private IEnumerator SetLocale(int localeID)
-    {
-        yield return LocalizationSettings.InitializationOperation;
-        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[localeID];
-        PlayerPrefs.SetInt(LANGUAGE_PREF_KEY, localeID);
+        if (m_EnglishToggle.isOn)
+        {
+            LanguageHelper.SetLocale(ELanguage.English);
+        }
+        else
+        {
+            LanguageHelper.SetLocale(ELanguage.Polish);
+        }
     }
 
     private void LoadTheLanguage()
     {
-        ELanguage language = (ELanguage)PlayerPrefs.GetInt(LANGUAGE_PREF_KEY);
+        ELanguage language = LanguageHelper.GetLocale();
 
         if (language == ELanguage.English)
         {

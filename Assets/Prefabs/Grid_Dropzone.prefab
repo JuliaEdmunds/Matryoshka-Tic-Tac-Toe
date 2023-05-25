@@ -260,6 +260,7 @@ GameObject:
   - component: {fileID: 5847783785450309639}
   - component: {fileID: 5847783785450309638}
   - component: {fileID: 5847783785450309637}
+  - component: {fileID: 3829723348582451878}
   m_Layer: 0
   m_Name: Grid_Dropzone
   m_TagString: Untagged
@@ -312,7 +313,147 @@ MonoBehaviour:
   m_RedCube: {fileID: 5461191369053303534}
   m_NeutralCube: {fileID: 4224280930123684181}
   m_ValidZoneRing: {fileID: 2806586509759443697}
+  m_TargetZoneRing: {fileID: 0}
   m_GridID: 0
+  m_DropzoneRingHelper: {fileID: 3829723348582451878}
+--- !u!114 &3829723348582451878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5847783785450309656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fd5dbed01e4e764888de0a38d863d48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ZoneRing: {fileID: 2806586509759443697}
+  m_RingParticle: {fileID: 6642897904674821162}
+  m_TargetRingColour:
+    m_Mode: 1
+    m_GradientMin:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    m_GradientMax:
+      serializedVersion: 2
+      key0: {r: 0.9622642, g: 0.5556619, b: 0.09531862, a: 1}
+      key1: {r: 0.9372549, g: 0.29474637, b: 0.011764725, a: 1}
+      key2: {r: 0.990566, g: 0.6419073, b: 0.54823774, a: 0.07058824}
+      key3: {r: 1, g: 0.25, b: 0, a: 0.07058824}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 21360
+      ctime2: 46453
+      ctime3: 65211
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 5178
+      atime1: 43947
+      atime2: 63800
+      atime3: 61487
+      atime4: 65050
+      atime5: 65050
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 4
+      m_NumAlphaKeys: 3
+    m_ColorMin: {r: 0, g: 0, b: 0, a: 0}
+    m_ColorMax: {r: 0, g: 0, b: 0, a: 0}
+  m_ValidRingColour:
+    m_Mode: 1
+    m_GradientMin:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    m_GradientMax:
+      serializedVersion: 2
+      key0: {r: 0.062745094, g: 1, b: 0.06732444, a: 1}
+      key1: {r: 0.20392156, g: 0.9529412, b: 0.35018215, a: 1}
+      key2: {r: 0.70450705, g: 1, b: 0.35686278, a: 0}
+      key3: {r: 0, g: 0.7294118, b: 0.06014046, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 26214
+      ctime2: 49537
+      ctime3: 65211
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 42598
+      atime2: 65050
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 4
+      m_NumAlphaKeys: 3
+    m_ColorMin: {r: 0, g: 0, b: 0, a: 0}
+    m_ColorMax: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &9018485199952558812
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,6 +626,12 @@ PrefabInstance:
 --- !u!1 &2806586509759443697 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2003676819584642259, guid: 46b8bae2c02f24846a79562fefc6807c,
+    type: 3}
+  m_PrefabInstance: {fileID: 4412545754256350754}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6642897904674821162 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6993195831995124232, guid: 46b8bae2c02f24846a79562fefc6807c,
     type: 3}
   m_PrefabInstance: {fileID: 4412545754256350754}
   m_PrefabAsset: {fileID: 0}

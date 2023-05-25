@@ -101,7 +101,7 @@ public class ScriptedTutorialPlayer : APlayer
     private void OnPieceGrabbed(Piece piece)
     {
         m_VisualGameManager.RequestStartMove(piece);
-        m_VisualGameManager.DisableTiles(m_CurrentValidTiles);
+        m_VisualGameManager.EnableValidTiles(m_CurrentValidTiles);
     }
 
     private void OnPieceReleased()

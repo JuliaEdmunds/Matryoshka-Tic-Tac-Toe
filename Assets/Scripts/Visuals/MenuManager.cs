@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
@@ -41,6 +36,10 @@ public class MenuManager : MonoBehaviour
         const bool IS_EXIT_BUTTON_VISIBLE = false;
 #endif
 
+        ////Ensure the screen is loaded with the correct language
+        ELanguage language = LanguageHelper.GetLocale();
+        LanguageHelper.SetLocale(language);
+
         m_ExitButton.SetActive(IS_EXIT_BUTTON_VISIBLE);
 
         for (int i = 0; i < m_CharacterSlots.Count; i++)
@@ -55,7 +54,7 @@ public class MenuManager : MonoBehaviour
 
         CheckForCrown();
 
-        if (!TutorialHelper.HasCompletedTutorial)
+        if (!TutorialHelper.HasCompletedTutorial && LanguageHelper.HasChosenLanguage)
         {
             m_TutorialManager.StartTutorial();
         }

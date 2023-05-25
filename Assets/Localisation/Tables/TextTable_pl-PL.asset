@@ -89,6 +89,14 @@ MonoBehaviour:
       swoj\u0105 matrioszk\u0119 na planszy, aby wygra\u0107!"
     m_Metadata:
       m_Items: []
+  - m_Id: 777270290505728
+    m_Localized: "Zamknij gr\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 778723147079680
+    m_Localized: Ustawienia
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 public enum EScene
 {
     Splash,
+    LanguageSettings,
     Menu,
     Main
 }
