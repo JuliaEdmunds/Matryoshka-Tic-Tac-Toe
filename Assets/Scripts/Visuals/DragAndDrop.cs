@@ -82,8 +82,20 @@ public class DragAndDrop : MonoBehaviour
         if (dropzone != null && dropzone.enabled) 
         {
             m_OccupiedDropzones.Add(dropzone);
-            dropzone.DropzoneRingHelper.TargerRingOn();
-        }
+            
+            if (m_OccupiedDropzones.Count == 1)
+            {
+                dropzone.DropzoneRingHelper.TargerRingOn();
+            }
+            else
+            {
+                for (int i = 0; i < m_OccupiedDropzones.Count; i++)
+                {
+                    Dropzone currentDropzone = m_OccupiedDropzones[i];
+                    currentDropzone.DropzoneRingHelper.ValidRingOn();
+                }
+            }
+        }    
     }
 
     private void OnTriggerExit(Collider other)
@@ -94,6 +106,11 @@ public class DragAndDrop : MonoBehaviour
         {
             m_OccupiedDropzones.Remove(dropzone);
            dropzone.DropzoneRingHelper.ValidRingOn();
+        }
+
+        if (m_OccupiedDropzones.Count == 1)
+        {
+            m_OccupiedDropzones[0].DropzoneRingHelper.TargerRingOn();
         }
     }
 }
