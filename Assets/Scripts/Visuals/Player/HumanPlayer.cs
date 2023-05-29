@@ -10,14 +10,14 @@ public class HumanPlayer : APlayer
         m_ActivePieces.ForEach(piece => { piece.OnGridOccupied += OnGridOccupied; piece.OnPieceGrabbed += OnPieceGrabbed; piece.OnPieceReleased += OnPieceReleased; });
     }
 
-    private void OnGridOccupied(Piece piece, Dropzone targetZone)
-    {
-        m_VisualGameManager.RequestFinishMove(piece, targetZone);
-    }
-
     private void OnPieceGrabbed(Piece piece)
     {
         m_VisualGameManager.RequestStartMove(piece);
+    }
+
+    private void OnGridOccupied(Piece piece, Dropzone targetZone)
+    {
+        m_VisualGameManager.RequestFinishMove(piece, targetZone);
     }
 
     private void OnPieceReleased()

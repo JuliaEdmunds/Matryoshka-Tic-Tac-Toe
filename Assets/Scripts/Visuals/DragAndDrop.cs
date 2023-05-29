@@ -10,8 +10,6 @@ public class DragAndDrop : MonoBehaviour
 {
     [SerializeField] private Rigidbody m_Rigidbody;
 
-    private Vector3 m_Offset;
-
     private static Plane m_Plane = new Plane(Vector3.up, 0);
 
     private Vector3 m_StartPos;

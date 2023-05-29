@@ -125,10 +125,6 @@ public class VisualGameManager : MonoBehaviour
             bool isActivePiece = currentPlayerActivePieces.Contains(currentPieceType);
             if (isActivePiece)
             {
-                if (true)
-                {
-
-                }
                 currentPiece.EnableDrag();
                 m_CurrentActivePieces.Add(currentPiece);
             }
