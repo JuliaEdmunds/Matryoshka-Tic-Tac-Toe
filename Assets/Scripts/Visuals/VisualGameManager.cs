@@ -217,6 +217,7 @@ public class VisualGameManager : MonoBehaviour
 
     private IEnumerator DoRequestFinishMove(Piece piece, Dropzone targetZone)
     {
+        // TODO: For now the piece will teleport, needs adjusting in animation
         Rigidbody pieceRb = piece.GetComponent<Rigidbody>();
         pieceRb.position = targetZone.transform.position;
 

@@ -30,16 +30,19 @@ public class Piece : MonoBehaviour
 
     private void OnGrabbed()
     {
+        TargetController.Instance.ActivateTarget(this);
         OnPieceGrabbed(this);
     }
 
     private void OnDropped(Dropzone tile)
     {
+        TargetController.Instance.ResetTarget();
         OnGridOccupied(this, tile);
     }
 
     private void OnDragEnded()
     {
+        TargetController.Instance.ResetTarget();
         OnPieceReleased();
     }
 

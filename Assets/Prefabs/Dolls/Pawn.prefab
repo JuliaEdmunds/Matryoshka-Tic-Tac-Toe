@@ -111,7 +111,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 382d4c6d67411bc47808de1ad3ef6ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Rigidbody: {fileID: -2549112454267045043}
+  m_TargetController: {fileID: 4075454190473867265, guid: 08a9d0123c75f574ab335bb9a544a053,
+    type: 3}
+  m_Rigidbody: {fileID: 4075454190473867388, guid: 08a9d0123c75f574ab335bb9a544a053,
+    type: 3}
 --- !u!114 &-7688015085312640227
 MonoBehaviour:
   m_ObjectHideFlags: 0
