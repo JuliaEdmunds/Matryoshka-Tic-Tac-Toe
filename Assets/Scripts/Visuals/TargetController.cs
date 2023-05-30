@@ -43,7 +43,7 @@ public class TargetController : MonoBehaviour
 
     public void ActivateTarget(Piece piece)
     {
-        m_LineRenderer.SetPosition(0, piece.transform.position + m_LineOffset);
+        m_LineRenderer.SetPosition(0, piece.transform.position);
         transform.position = piece.transform.position;
         gameObject.SetActive(true);
     }
