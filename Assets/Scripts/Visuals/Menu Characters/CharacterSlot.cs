@@ -22,6 +22,8 @@ public class CharacterSlot : MonoBehaviour
 
     private Character m_CurrentlyDraggedCharacter;
 
+    public CharacterSlot m_CurrentSlot;
+
     private void Start()
     {
         m_DragableCharacterTypes.ForEach(character => { character.OnCharacterGrabbed += OnCharacterGrabbed; character.OnCharacterReleased += OnCharacterReleased; });
@@ -41,6 +43,7 @@ public class CharacterSlot : MonoBehaviour
 
     private void OnCharacterReleased()
     {
+        ChangeCharacter();
         SetCharacterRings(true);
         SetSlotRings(false);
         m_CurrentlyDraggedCharacter = null;
@@ -48,7 +51,17 @@ public class CharacterSlot : MonoBehaviour
 
     private void OnTriggerEnter(Collider opponent)
     {
-        if (m_CurrentlyDraggedCharacter == null)
+        m_CurrentSlot = this;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        m_CurrentSlot = null;
+    }
+
+    private void ChangeCharacter()
+    {
+        if (m_CurrentSlot == null || m_CurrentlyDraggedCharacter == null)
         {
             return;
         }
@@ -60,19 +73,8 @@ public class CharacterSlot : MonoBehaviour
             m_CurrentOpponent.SetActive(false);
         }
 
-        // TODO: think how to move merge this chunk of code with EnableCharacterInSlot()
-        for (int i = 0; i < m_CharacterTypeFigures.Count; i++)
-        {
-            CharacterTypeHolder currentOpponent = m_CharacterTypeFigures[i];
-            EPlayerType currentOpponentType = currentOpponent.CharacterType;
-
-            if (draggedOpponentType == currentOpponentType)
-            {
-                m_CurrentOpponent = currentOpponent.gameObject;
-                m_CurrentOpponent.SetActive(true);
-                OnCharacterTypeChanged(currentOpponentType, this);
-            }
-        }
+        LoadCharacterInSlot(draggedOpponentType);
+        OnCharacterTypeChanged(draggedOpponentType, this);
     }
 
     private void SetCharacterRings(bool shouldTurnOn)
@@ -111,31 +113,30 @@ public class CharacterSlot : MonoBehaviour
         {
             currentCharacterType = GameSettings.BluePlayer;
 
-            EnableCharacterInSlot(currentCharacterType);
+            LoadCharacterInSlot(currentCharacterType);
         }
         else if (this.PlayerColour == EPlayerColour.Red && GameSettings.RedPlayer != EPlayerType.Invalid && GameSettings.RedPlayer != EPlayerType.Tutorial)
         {
             currentCharacterType = GameSettings.RedPlayer;
 
-            EnableCharacterInSlot(currentCharacterType);
+            LoadCharacterInSlot(currentCharacterType);
         }
     }
 
-    private void EnableCharacterInSlot(EPlayerType characterType)
+    private void LoadCharacterInSlot(EPlayerType characterType)
     {
         for (int i = 0; i < m_CharacterTypeFigures.Count; i++)
         {
             CharacterTypeHolder currentCharacter = m_CharacterTypeFigures[i];
-
             EPlayerType currentCharacterType = currentCharacter.CharacterType;
 
             if (characterType == currentCharacterType)
             {
                 m_CurrentOpponent = currentCharacter.gameObject;
-                GameObject characterToShow = currentCharacter.gameObject;
-                characterToShow.SetActive(true);
+                m_CurrentOpponent.SetActive(true);
             }
         }
+        m_CurrentSlot = null;
     }
 
     private void OnDestroy()
