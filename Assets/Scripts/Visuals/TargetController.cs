@@ -58,7 +58,7 @@ public class TargetController : MonoBehaviour
 
             if (OccupiedDropzones.Count == 1)
             {
-                dropzone.DropzoneRingHelper.TargerRingOn();
+                dropzone.DropzoneRingHelper.TargetRingOn();
             }
             else
             {
@@ -83,7 +83,7 @@ public class TargetController : MonoBehaviour
 
         if (OccupiedDropzones.Count == 1)
         {
-            OccupiedDropzones[0].DropzoneRingHelper.TargerRingOn();
+            OccupiedDropzones[0].DropzoneRingHelper.TargetRingOn();
         }
     }
 

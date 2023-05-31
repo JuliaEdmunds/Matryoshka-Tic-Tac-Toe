@@ -22,7 +22,7 @@ public class DropzoneRingHelper : MonoBehaviour
         m_ZoneRing.SetActive(true);
     }
 
-    public void TargerRingOn()
+    public void TargetRingOn()
     {
         var particleColour = m_RingParticle.colorOverLifetime;
         particleColour.color = m_TargetRingColour;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +15,9 @@ public class CharacterSlot : MonoBehaviour
 
     [SerializeField] private TutorialManager m_TutorialManager;
 
-    [SerializeField] private ParticleSystem m_ParticleSystem;
+    [SerializeField] private ParticleSystem m_RingParticleSystem;
+
+    [SerializeField] private ParticleSystem m_PedestalSmoke;
 
     private GameObject m_CurrentOpponent;
 
@@ -22,7 +25,7 @@ public class CharacterSlot : MonoBehaviour
 
     private Character m_CurrentlyDraggedCharacter;
 
-    public CharacterSlot m_CurrentSlot;
+    private CharacterSlot m_CurrentSlot;
 
     private void Start()
     {
@@ -73,6 +76,15 @@ public class CharacterSlot : MonoBehaviour
             m_CurrentOpponent.SetActive(false);
         }
 
+        StartCoroutine(DoChangeCharacter(draggedOpponentType));
+    }
+
+    private IEnumerator DoChangeCharacter(EPlayerType draggedOpponentType)
+    {
+        m_CurrentSlot.m_PedestalSmoke.Play();
+
+        yield return new WaitForSeconds(0.75f);
+
         LoadCharacterInSlot(draggedOpponentType);
         OnCharacterTypeChanged(draggedOpponentType, this);
     }
@@ -97,11 +109,11 @@ public class CharacterSlot : MonoBehaviour
     {
         if (shouldTurnOn)
         {
-            m_ParticleSystem.Play();
+            m_RingParticleSystem.Play(false);
         }
         else
         {
-            m_ParticleSystem.Stop();
+            m_RingParticleSystem.Stop(false);
         }
     }
 
