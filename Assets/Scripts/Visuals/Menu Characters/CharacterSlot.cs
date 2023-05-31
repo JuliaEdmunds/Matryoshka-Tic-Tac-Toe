@@ -7,25 +7,53 @@ public class CharacterSlot : MonoBehaviour
     [SerializeField] private EPlayerColour m_PlayerColour;
     public EPlayerColour PlayerColour => m_PlayerColour;
 
-    [SerializeField] private List<CharacterTypeHolder> m_CharacterTypes;
+    [SerializeField] private List<CharacterTypeHolder> m_CharacterTypeFigures;
+
+    [SerializeField] private List<Character> m_DragableCharacterTypes;
+    public List<Character> DragableCharacterTypes => m_DragableCharacterTypes;
+
+    [SerializeField] private TutorialManager m_TutorialManager;
+
+    [SerializeField] private ParticleSystem m_ParticleSystem;
 
     private GameObject m_CurrentOpponent;
 
     public static event Action<EPlayerType, CharacterSlot> OnCharacterTypeChanged;
 
+    private Character m_CurrentlyDraggedCharacter;
+
+    private void Start()
+    {
+        m_DragableCharacterTypes.ForEach(character => { character.OnCharacterGrabbed += OnCharacterGrabbed; character.OnCharacterReleased += OnCharacterReleased; });
+    }
+
+    private void SetDraggedCharacter(Character character)
+    {
+        m_CurrentlyDraggedCharacter = character;
+    }
+
+    private void OnCharacterGrabbed(Character character)
+    {
+        SetDraggedCharacter(character);
+        SetCharacterRings(false);
+        SetSlotRings(true);
+    }
+
+    private void OnCharacterReleased()
+    {
+        SetCharacterRings(true);
+        SetSlotRings(false);
+        m_CurrentlyDraggedCharacter = null;
+    }
+
     private void OnTriggerEnter(Collider opponent)
     {
-        // Get type of character from dragged opponent
-        GameObject draggedOpponent = opponent.gameObject;
-
-        Character draggedCharacter = draggedOpponent.GetComponent<Character>();
-
-        if (draggedCharacter == null)
+        if (m_CurrentlyDraggedCharacter == null)
         {
             return;
         }
 
-        EPlayerType draggedOpponentType = draggedCharacter.CharacterType;
+        EPlayerType draggedOpponentType = m_CurrentlyDraggedCharacter.CharacterType;
 
         if (m_CurrentOpponent != null)
         {
@@ -33,9 +61,9 @@ public class CharacterSlot : MonoBehaviour
         }
 
         // TODO: think how to move merge this chunk of code with EnableCharacterInSlot()
-        for (int i = 0; i < m_CharacterTypes.Count; i++)
+        for (int i = 0; i < m_CharacterTypeFigures.Count; i++)
         {
-            CharacterTypeHolder currentOpponent = m_CharacterTypes[i];
+            CharacterTypeHolder currentOpponent = m_CharacterTypeFigures[i];
             EPlayerType currentOpponentType = currentOpponent.CharacterType;
 
             if (draggedOpponentType == currentOpponentType)
@@ -44,6 +72,34 @@ public class CharacterSlot : MonoBehaviour
                 m_CurrentOpponent.SetActive(true);
                 OnCharacterTypeChanged(currentOpponentType, this);
             }
+        }
+    }
+
+    private void SetCharacterRings(bool shouldTurnOn)
+    {
+        if (!TutorialHelper.HasCompletedTutorial)
+        {
+            Character currentCharacter = m_TutorialManager.CurrentTutorialCharacter;
+            currentCharacter.ValidPieceRing.SetActive(shouldTurnOn);
+            return;
+        }
+
+        for (int i = 0; i < m_DragableCharacterTypes.Count; i++)
+        {
+            Character currentCharacter = m_DragableCharacterTypes[i];
+            currentCharacter.ValidPieceRing.SetActive(shouldTurnOn);
+        }
+    }
+
+    private void SetSlotRings(bool shouldTurnOn)
+    {
+        if (shouldTurnOn)
+        {
+            m_ParticleSystem.Play();
+        }
+        else
+        {
+            m_ParticleSystem.Stop();
         }
     }
 
@@ -67,9 +123,9 @@ public class CharacterSlot : MonoBehaviour
 
     private void EnableCharacterInSlot(EPlayerType characterType)
     {
-        for (int i = 0; i < m_CharacterTypes.Count; i++)
+        for (int i = 0; i < m_CharacterTypeFigures.Count; i++)
         {
-            CharacterTypeHolder currentCharacter = m_CharacterTypes[i];
+            CharacterTypeHolder currentCharacter = m_CharacterTypeFigures[i];
 
             EPlayerType currentCharacterType = currentCharacter.CharacterType;
 
@@ -80,5 +136,10 @@ public class CharacterSlot : MonoBehaviour
                 characterToShow.SetActive(true);
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        m_DragableCharacterTypes.ForEach(character => { character.OnCharacterGrabbed -= OnCharacterGrabbed; character.OnCharacterReleased -= OnCharacterReleased; });
     }
 }

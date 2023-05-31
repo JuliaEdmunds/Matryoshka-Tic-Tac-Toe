@@ -30,7 +30,7 @@ public class Piece : MonoBehaviour
 
     private void OnGrabbed()
     {
-        TargetController.Instance.ActivateTarget(this);
+        TargetController.Instance.ActivateTarget(transform);
         OnPieceGrabbed(this);
     }
 

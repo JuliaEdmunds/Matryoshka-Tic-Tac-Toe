@@ -7,7 +7,6 @@ using UnityEngine.UIElements;
 public class TargetController : MonoBehaviour
 {
     [Header("Game Elements")]
-    [SerializeField] private List<Piece> m_AllPieces;
     [SerializeField] private LineRenderer m_LineRenderer;
     [SerializeField] private Rigidbody m_Rigidbody;
     public Rigidbody Rigidbody => m_Rigidbody;
@@ -15,7 +14,8 @@ public class TargetController : MonoBehaviour
     [Header("Positions")]
     [SerializeField] private Vector3 m_LineOffset;
 
-    public List<Dropzone> OccupiedDropzones = new();
+    private List<Dropzone> m_OccupiedDropzones = new();
+    public List<Dropzone> OccupiedDropzones => m_OccupiedDropzones;
 
     public static TargetController Instance { get; private set; }
 
@@ -41,10 +41,10 @@ public class TargetController : MonoBehaviour
         m_LineRenderer.SetPosition(1, targetPos);
     }
 
-    public void ActivateTarget(Piece piece)
+    public void ActivateTarget(Transform objTransform)
     {
-        m_LineRenderer.SetPosition(0, piece.transform.position);
-        transform.position = piece.transform.position;
+        m_LineRenderer.SetPosition(0, objTransform.position);
+        transform.position = objTransform.position;
         gameObject.SetActive(true);
     }
 
@@ -90,7 +90,6 @@ public class TargetController : MonoBehaviour
     public void ResetTarget()
     {
         OccupiedDropzones.Clear();
-        // gameObject.transform.position = m_StartPos;
         gameObject.SetActive(false);
     }
 

@@ -12,8 +12,6 @@ public class DragAndDrop : MonoBehaviour
 
     private Vector3 m_StartPos;
 
-    //private List<Dropzone> m_OccupiedDropzones = new();
-
     // Game Logic needs to track which piece occupies which dropzone
     public event Action<Dropzone> OnDropped;
 

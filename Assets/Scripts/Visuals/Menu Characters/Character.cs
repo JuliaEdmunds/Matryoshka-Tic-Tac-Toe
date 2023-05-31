@@ -26,11 +26,13 @@ public class Character : MonoBehaviour
 
     private void OnGrabbed()
     {
+        TargetController.Instance.ActivateTarget(transform);
         OnCharacterGrabbed?.Invoke(this);
     }
 
     private void OnDragEnded()
     {
+        TargetController.Instance.ResetTarget();
         OnCharacterReleased?.Invoke();
     }
 

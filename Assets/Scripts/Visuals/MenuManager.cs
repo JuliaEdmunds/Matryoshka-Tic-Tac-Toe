@@ -22,10 +22,11 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] private List<Character> m_CharacterTypes;
     public List<Character> CharacterTypes => m_CharacterTypes;
-    [SerializeField] private ParticleSystem m_BlueRingParticleSystem;
-    [SerializeField] private ParticleSystem m_RedRingParticleSystem;
     [SerializeField] private GameObject m_BlueCrown;
     [SerializeField] private GameObject m_RedCrown;
+
+    private Character m_CurrentGrabbedCharacter;
+    public Character CurrentGrabbedCharacter => m_CurrentGrabbedCharacter;
 
 
     private void Start()
@@ -36,7 +37,7 @@ public class MenuManager : MonoBehaviour
         const bool IS_EXIT_BUTTON_VISIBLE = false;
 #endif
 
-        ////Ensure the screen is loaded with the correct language
+        //Ensure the screen is loaded with the correct language
         ELanguage language = LanguageHelper.GetLocale();
         LanguageHelper.SetLocale(language);
 
@@ -50,7 +51,7 @@ public class MenuManager : MonoBehaviour
 
         CharacterSlot.OnCharacterTypeChanged += OnCharacterTypeChanged;
 
-        m_CharacterTypes.ForEach(character => { character.OnCharacterGrabbed += OnCharacterGrabbed; character.OnCharacterReleased += OnCharacterReleased; });
+        //m_CharacterTypes.ForEach(character => { character.OnCharacterGrabbed += OnCharacterGrabbed; character.OnCharacterReleased += OnCharacterReleased; });
 
         CheckForCrown();
 
@@ -58,18 +59,6 @@ public class MenuManager : MonoBehaviour
         {
             m_TutorialManager.StartTutorial();
         }
-    }
-
-    private void OnCharacterGrabbed(Character character)
-    {
-        SetCharacterRings(false);
-        SetSlotRings(true);
-    }
-
-    private void OnCharacterReleased()
-    {
-        SetCharacterRings(true);
-        SetSlotRings(false);
     }
 
     private void LoadCharacter(CharacterSlot slot)
@@ -117,36 +106,6 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    private void SetCharacterRings(bool shouldTurnOn)
-    {
-        if (!TutorialHelper.HasCompletedTutorial)
-        {
-            Character currentCharacter = m_TutorialManager.CurrentTutorialCharacter;
-            currentCharacter.ValidPieceRing.SetActive(shouldTurnOn);
-            return;
-        }
-
-        for (int i = 0; i < m_CharacterTypes.Count; i++)
-        {
-            Character currentCharacter = m_CharacterTypes[i];
-            currentCharacter.ValidPieceRing.SetActive(shouldTurnOn);
-        }
-    }
-
-    private void SetSlotRings(bool shouldTurnOn)
-    {
-        if (shouldTurnOn)
-        {
-            m_BlueRingParticleSystem.Play();
-            m_RedRingParticleSystem.Play();
-        }
-        else
-        {
-            m_BlueRingParticleSystem.Stop();
-            m_RedRingParticleSystem.Stop();
-        }
-    }
-
     public void LoadScene()
     {
         m_TutorialManager.TutorialScreen.SetActive(false);
@@ -161,7 +120,7 @@ public class MenuManager : MonoBehaviour
     private void OnDestroy()
     {
         CharacterSlot.OnCharacterTypeChanged -= OnCharacterTypeChanged;
-        m_CharacterTypes.ForEach(character => { character.OnCharacterGrabbed -= OnCharacterGrabbed; character.OnCharacterReleased -= OnCharacterReleased; });
+        //m_CharacterTypes.ForEach(character => { character.OnCharacterGrabbed -= OnCharacterGrabbed; character.OnCharacterReleased -= OnCharacterReleased; });
     }
 
     public void QuitGame()
