@@ -8,13 +8,9 @@ using UnityEngine.EventSystems;
 
 public class DragAndDrop : MonoBehaviour
 {
-    [SerializeField] private Rigidbody m_Rigidbody;
-
     private static Plane m_Plane = new Plane(Vector3.up, 0);
 
     private Vector3 m_StartPos;
-
-    private List<Dropzone> m_OccupiedDropzones = new();
 
     // Game Logic needs to track which piece occupies which dropzone
     public event Action<Dropzone> OnDropped;
@@ -49,66 +45,29 @@ public class DragAndDrop : MonoBehaviour
 
         if (m_Plane.Raycast(ray, out float distance)) // && !EventSystem.current.IsPointerOverGameObject()
         {
-            m_Rigidbody.position = ray.GetPoint(distance);
+            TargetController.Instance.Rigidbody.position = ray.GetPoint(distance);
         }
     }
 
     private void OnMouseUp()
     {
+        List<Dropzone> occupiedDropzones = TargetController.Instance.OccupiedDropzones;
+
         if (!enabled)
         {
             return;
         }
         
-        if (m_OccupiedDropzones.Count == 1)
+        if (occupiedDropzones.Count == 1)
         {
-            Dropzone targetZone = m_OccupiedDropzones[0];
+            Dropzone targetZone = occupiedDropzones[0];
 
             OnDropped(targetZone);
         }
         else
         {
-            m_Rigidbody.position = m_StartPos;
+            TargetController.Instance.Rigidbody.position = m_StartPos;
             OnDragEnded?.Invoke();
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Dropzone dropzone = other.gameObject.GetComponent<Dropzone>();
-
-        if (dropzone != null && dropzone.enabled) 
-        {
-            m_OccupiedDropzones.Add(dropzone);
-            
-            if (m_OccupiedDropzones.Count == 1)
-            {
-                dropzone.DropzoneRingHelper.TargerRingOn();
-            }
-            else
-            {
-                for (int i = 0; i < m_OccupiedDropzones.Count; i++)
-                {
-                    Dropzone currentDropzone = m_OccupiedDropzones[i];
-                    currentDropzone.DropzoneRingHelper.ValidRingOn();
-                }
-            }
-        }    
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        Dropzone dropzone = other.gameObject.GetComponent<Dropzone>();
-
-        if (dropzone != null && dropzone.enabled)
-        {
-            m_OccupiedDropzones.Remove(dropzone);
-           dropzone.DropzoneRingHelper.ValidRingOn();
-        }
-
-        if (m_OccupiedDropzones.Count == 1)
-        {
-            m_OccupiedDropzones[0].DropzoneRingHelper.TargerRingOn();
         }
     }
 }

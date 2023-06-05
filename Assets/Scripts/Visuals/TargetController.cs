@@ -2,55 +2,103 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class TargetController : MonoBehaviour
 {
-    [SerializeField] private VisualGameManager m_VisualGameManager;
-    [SerializeField] private List<Piece> m_AllPieces;
-    [SerializeField] private Vector3 m_Offset;
+    [Header("Game Elements")]
+    [SerializeField] private LineRenderer m_LineRenderer;
+    [SerializeField] private Rigidbody m_Rigidbody;
+    public Rigidbody Rigidbody => m_Rigidbody;
 
-    private bool m_WasDropped;
+    [Header("Positions")]
+    [SerializeField] private Vector3 m_LineOffset;
+
+    private List<Dropzone> m_OccupiedDropzones = new();
+    public List<Dropzone> OccupiedDropzones => m_OccupiedDropzones;
+
+    public static TargetController Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
 
     private void Start()
     {
         gameObject.SetActive(false);
-        m_AllPieces.ForEach(piece => { piece.OnGridOccupied += OnGridOccupied; piece.OnPieceGrabbed += OnPieceGrabbed; piece.OnPieceReleased += OnPieceReleased; });
     }
 
-    private void OnPieceGrabbed(Piece piece)
+    private void Update()
     {
+        Vector3 targetPos = gameObject.transform.position + m_LineOffset;
+        m_LineRenderer.SetPosition(1, targetPos);
+    }
+
+    public void ActivateTarget(Transform objTransform)
+    {
+        m_LineRenderer.SetPosition(0, objTransform.position);
+        transform.position = objTransform.position;
         gameObject.SetActive(true);
-        m_WasDropped = false;
-
-        StartCoroutine(KeepMvoingTarget(piece));
     }
 
-    private IEnumerator KeepMvoingTarget(Piece piece)
+    private void OnTriggerEnter(Collider other)
     {
-        while (!m_WasDropped)
+        Dropzone dropzone = other.gameObject.GetComponent<Dropzone>();
+
+        if (dropzone != null && dropzone.enabled)
         {
-            gameObject.transform.position = piece.transform.position + m_Offset;
-            yield return null;
+            OccupiedDropzones.Add(dropzone);
+
+            if (OccupiedDropzones.Count == 1)
+            {
+                dropzone.DropzoneRingHelper.TargetRingOn();
+            }
+            else
+            {
+                for (int i = 0; i < OccupiedDropzones.Count; i++)
+                {
+                    Dropzone currentDropzone = OccupiedDropzones[i];
+                    currentDropzone.DropzoneRingHelper.ValidRingOn();
+                }
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Dropzone dropzone = other.gameObject.GetComponent<Dropzone>();
+
+        if (dropzone != null && dropzone.enabled)
+        {
+            OccupiedDropzones.Remove(dropzone);
+            dropzone.DropzoneRingHelper.ValidRingOn();
         }
 
+        if (OccupiedDropzones.Count == 1)
+        {
+            OccupiedDropzones[0].DropzoneRingHelper.TargetRingOn();
+        }
+    }
+
+    public void ResetTarget()
+    {
+        OccupiedDropzones.Clear();
         gameObject.SetActive(false);
-    }
-
-    private void OnGridOccupied(Piece piece, Dropzone dropzone)
-    {
-        m_WasDropped = true;
-        Debug.Log("On grid");
-    }
-
-    private void OnPieceReleased()
-    {
-        m_WasDropped = true;
-        Debug.Log("Dropped");
     }
 
     private void OnDestroy()
     {
-        m_AllPieces.ForEach(piece => { piece.OnGridOccupied -= OnGridOccupied; piece.OnPieceGrabbed -= OnPieceGrabbed; piece.OnPieceReleased -= OnPieceReleased; });
+        if (Instance == this)
+        {
+            Instance = null;
+        }
     }
 }
 

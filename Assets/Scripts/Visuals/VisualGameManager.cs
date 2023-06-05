@@ -10,6 +10,7 @@ using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Reflection;
+using System.Net;
 
 public class VisualGameManager : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class VisualGameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_GameOverText;
 
     private GameLogic m_GameLogic = new();
+    private Dictionary<KeyValuePair<EPlayerColour, EPiece>, Piece> m_PieceMappings = new();
     private List<Piece> m_CurrentActivePieces = new();
 
     private APlayer m_BluePlayer;
@@ -46,6 +48,21 @@ public class VisualGameManager : MonoBehaviour
         {
             GameSettings.BluePlayer = EPlayerType.Tutorial;
             GameSettings.RedPlayer = EPlayerType.Tutorial;
+        }
+
+        //Init m_PieceMappings dictionaries
+        for (int i = 0; i < m_PlayerBluePieces.Count; i++)
+        {
+            Piece currentPiece = m_PlayerBluePieces[i];
+            KeyValuePair<EPlayerColour, EPiece> key = new(EPlayerColour.Blue, currentPiece.PieceType);
+            m_PieceMappings[key] = currentPiece;
+        }
+
+        for (int i = 0; i < m_PlayerRedPieces.Count; i++)
+        {
+            Piece currentPiece = m_PlayerRedPieces[i];
+            KeyValuePair<EPlayerColour, EPiece> key = new(EPlayerColour.Red, currentPiece.PieceType);
+            m_PieceMappings[key] = currentPiece;
         }
 
         m_BluePlayer = PlayerFactory.CreatePlayer(GameSettings.BluePlayer);
@@ -217,11 +234,8 @@ public class VisualGameManager : MonoBehaviour
 
     private IEnumerator DoRequestFinishMove(Piece piece, Dropzone targetZone)
     {
-        Rigidbody pieceRb = piece.GetComponent<Rigidbody>();
-        pieceRb.position = targetZone.transform.position;
-
         // TODO: Here goes the animation (crushing, moving, etc.)
-        yield return null;
+        yield return MovePiece(piece, targetZone);
 
         targetZone.NeutralCube.SetActive(false);
         targetZone.RedCube.SetActive(piece.PlayerID == EPlayerColour.Red);
@@ -233,6 +247,112 @@ public class VisualGameManager : MonoBehaviour
         yield return null;
 
         m_GameLogic.SetPieceOnBoard(piece.PieceType, targetZone.GridID);
+    }
+
+    private IEnumerator MovePiece(Piece piece, Dropzone targetZone)
+    {
+        bool isTaken = false;
+
+        Vector3 startPos = piece.transform.position;
+        Vector3 targetPos = targetZone.transform.position;
+        Vector3 endPos = targetPos;
+
+        Rigidbody pieceRb = piece.GetComponent<Rigidbody>();
+
+        if (!m_GameLogic.IsTileEmpty(targetZone.GridID))
+        {
+            Vector3 offest = new(0, 5, 0);
+            targetPos += offest;
+            isTaken = true;
+        }
+
+        float arcHeight = 7.5f;
+        float minParabolaDuration = 0.75f;
+
+        // Move on or above the dropzone
+        yield return DoParabollicMovement(pieceRb, startPos, targetPos, arcHeight, minParabolaDuration);
+
+        // If crashing then lower slowly and play crashing animation
+        float duration = 0.5f;
+
+        if (isTaken)
+        {
+            piece.GetReadyToCrash();
+            float timeElapsed = 0;
+            startPos = pieceRb.position;
+
+            while (timeElapsed < duration)
+            {
+                pieceRb.position = Vector3.Lerp(startPos, endPos, timeElapsed / duration);
+                timeElapsed += Time.deltaTime;
+
+                yield return null;
+            }
+        }    
+
+        pieceRb.position = targetZone.transform.position;
+        piece.ResetAnimation();
+    }
+
+    private IEnumerator DoParabollicMovement(Rigidbody pieceRb, Vector3 startPos, Vector3 targetPos, float arcHeight, float minDuration)
+    {
+        float duration;
+        float timeElapsed = 0;
+
+        float x0 = startPos.x;
+        float x1 = targetPos.x;
+        float dist = x1 - x0;
+
+        float z0 = startPos.z;
+        float z1 = targetPos.z;
+
+        float y0 = startPos.y;
+        float y1 = targetPos.y;
+
+        //Duration scaler vars
+        float startDistanceToIncrease = 15;
+        float endDistanceToIncrease = 30;
+        float startDistanceValue = minDuration;
+        float endDistanceValue = 1.25f;
+
+        // Assign duration of the move depending on the distance
+        if (Math.Abs(dist) < startDistanceToIncrease)
+        {
+            duration = startDistanceValue;
+        }
+        else if (Math.Abs(dist) > endDistanceToIncrease)
+        {
+            duration = endDistanceValue;
+        }
+        else
+        {
+            float distanceRange = endDistanceToIncrease - startDistanceToIncrease;
+            float normalisedTimePassed = (Math.Abs(dist) - startDistanceToIncrease) / distanceRange;
+
+            float valueRange = endDistanceValue - startDistanceValue;
+
+            duration = (valueRange * normalisedTimePassed) + startDistanceValue;
+        }
+
+        while (timeElapsed < duration)
+        {
+            float normalisedTime = timeElapsed / duration;
+
+            float nextX = Mathf.Lerp(x0, x1, normalisedTime);
+            float nextZ = Mathf.Lerp(z0, z1, normalisedTime);
+            float baseY = Mathf.Lerp(y0, y1, normalisedTime); //check how it works with normalisedTime
+
+            float arc = arcHeight * (nextX - x0) * (nextX - x1) / (-0.25f * dist * dist);
+            Vector3 nextPos = new(nextX, baseY + arc, nextZ);
+
+            pieceRb.position = nextPos;
+
+            timeElapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        pieceRb.position = targetPos;
     }
 
     // If the player dropped the piece outside of the board (or on invalid slot)
@@ -293,7 +413,7 @@ public class VisualGameManager : MonoBehaviour
 
     private IEnumerator ShowGameOverScreen(EPlayerColour winner)
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.5f);
 
         if (winner != EPlayerColour.Invalid)
         {

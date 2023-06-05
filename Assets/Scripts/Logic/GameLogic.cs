@@ -86,6 +86,13 @@ public class GameLogic
         EndTurn();
     }
 
+    public bool IsTileEmpty(EGrid tile)
+    {
+        int tileIndex = (int)tile;
+        BoardTile boardtile = m_BoardTiles[tileIndex];
+        return boardtile.IsEmpty();
+    }
+
     private void EndTurn()
     {
         OnTurnEnded?.Invoke(CurrentPlayer);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CubePeople
 {
-    public class AnimationController : MonoBehaviour
+    public class CubePeopleAnimationController : MonoBehaviour
     {
 
         Animator anim;
