@@ -10,11 +10,17 @@ public class Piece : MonoBehaviour
 
     [SerializeField] private EPlayerColour m_PlayerID;
     public EPlayerColour PlayerID => m_PlayerID;
-    public EPiece PieceType => m_PieceType;
 
     [SerializeField] private EPiece m_PieceType;
+    public EPiece PieceType => m_PieceType;
 
     [SerializeField] private DragAndDrop m_DragAndDrop;
+
+    [SerializeField] private AnimationController m_AnimationController;
+
+    [SerializeField] private ParticleSystem m_Smoke;
+
+    [SerializeField] private Crasher m_Crasher;
 
     public event Action<Piece, Dropzone> OnGridOccupied;
     public event Action<Piece> OnPieceGrabbed;
@@ -54,5 +60,29 @@ public class Piece : MonoBehaviour
     public void DisableDrag()
     {
         m_DragAndDrop.enabled = false;
+    }
+
+    public void GetReadyToCrash()
+    {
+        m_Crasher.gameObject.SetActive(true);
+    }
+
+    public void CrashOpponent()
+    {
+        m_AnimationController.CrashOpponent();
+
+        m_Crasher.gameObject.SetActive(false);
+    }
+
+    public void BeCrashed()
+    {
+        m_AnimationController.BeCrashed();
+
+        //Destroy(this);
+    }
+
+    public void ResetAnimation()
+    {
+        m_AnimationController.ResetAnimation();
     }
 }
