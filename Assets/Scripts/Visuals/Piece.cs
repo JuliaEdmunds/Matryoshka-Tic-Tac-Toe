@@ -78,7 +78,9 @@ public class Piece : MonoBehaviour
     {
         m_AnimationController.BeCrashed();
 
-        //Destroy(this);
+        m_Smoke.Play();
+
+        //TODO: Add crushing sound
     }
 
     public void ResetAnimation()
