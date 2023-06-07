@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.Localization.Settings;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class MenuSettingsManager : MonoBehaviour
 {
     private const string VOLUME_PREF_KEY = "NA.Volume";
-    //private const string LANGUAGE_PREF_KEY = "NA.Language";
 
     [Header("Buttons")]
     [SerializeField] private GameObject m_BackButton;
@@ -41,10 +33,6 @@ public class MenuSettingsManager : MonoBehaviour
 
         m_AudioSource.Play();
     }
-
-    //public void SetEnglish() => LanguageHelper.SetLocale(ELanguage.English);
-    //
-    //public void SetPolish() => LanguageHelper.SetLocale(ELanguage.English);
 
     public void ChangeLocale()
     {

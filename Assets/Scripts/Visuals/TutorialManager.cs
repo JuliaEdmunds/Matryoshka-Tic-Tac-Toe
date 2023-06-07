@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
@@ -37,8 +33,6 @@ public class TutorialManager : MonoBehaviour
         m_CharacterTypes = m_MenuManager.CharacterTypes;
 
         CharacterSlot.OnCharacterTypeChanged += OnCharacterTypeChanged;
-
-        m_CharacterTypes.ForEach(character => { character.OnCharacterReleased += OnCharacterReleased; });
 
         StartTutorialTurn();
     }
@@ -108,7 +102,6 @@ public class TutorialManager : MonoBehaviour
 #pragma warning disable CS0618 // Type or member is obsolete
     private void FirstTutorialStep()
     {
-        m_HasCompletedStep = false;
         // Enable only human character and the blue slot
         EnableCharacter(EPlayerType.Human);
 
@@ -118,8 +111,6 @@ public class TutorialManager : MonoBehaviour
 
     private void SecondTutorialStep()
     {
-        m_HasCompletedStep = false;
-
         // Enable only basicAI character and the red slot
         m_RedRingParticleSystem.enableEmission = true;
         EnableCharacter(EPlayerType.BasicAI);
@@ -130,8 +121,6 @@ public class TutorialManager : MonoBehaviour
 
     private void ThirdTutorialStep()
     {
-        m_HasCompletedStep = false;
-
         // Don't enable any characters just wait fot the player to press play
         m_BlueRingParticleSystem.enableEmission = false;
         m_RedRingParticleSystem.enableEmission = false;
@@ -179,8 +168,7 @@ public class TutorialManager : MonoBehaviour
         {
             if (characterType == EPlayerType.Human && characterSlot.PlayerColour == EPlayerColour.Blue)
             {
-                m_HasCompletedStep = true;
-                return;
+                StartCoroutine(BeginEndMove());
             }
         }
 
@@ -188,19 +176,8 @@ public class TutorialManager : MonoBehaviour
         {
             if (characterType == EPlayerType.BasicAI && characterSlot.PlayerColour == EPlayerColour.Red)
             {
-                m_HasCompletedStep = true;
-                return;
+                StartCoroutine(BeginEndMove());
             }
-        }
-
-        m_HasCompletedStep = false;
-    }
-
-    private void OnCharacterReleased()
-    {
-        if (m_HasCompletedStep)
-        {
-            StartCoroutine(BeginEndMove());
         }
     }
 
@@ -208,11 +185,6 @@ public class TutorialManager : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         EndMove();
-    }
-
-    private void OnDestroy()
-    {
-        CharacterSlot.OnCharacterTypeChanged -= OnCharacterTypeChanged;
     }
 
     private void EndMove()
@@ -236,6 +208,11 @@ public class TutorialManager : MonoBehaviour
 
         m_CurrentRoundOfMoves++;
         StartTutorialTurn();
+    }
+
+    private void OnDestroy()
+    {
+        CharacterSlot.OnCharacterTypeChanged -= OnCharacterTypeChanged;
     }
 }
 

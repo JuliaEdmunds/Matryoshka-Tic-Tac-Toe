@@ -51,8 +51,6 @@ public class MenuManager : MonoBehaviour
 
         CharacterSlot.OnCharacterTypeChanged += OnCharacterTypeChanged;
 
-        //m_CharacterTypes.ForEach(character => { character.OnCharacterGrabbed += OnCharacterGrabbed; character.OnCharacterReleased += OnCharacterReleased; });
-
         CheckForCrown();
 
         if (!TutorialHelper.HasCompletedTutorial && LanguageHelper.HasChosenLanguage)

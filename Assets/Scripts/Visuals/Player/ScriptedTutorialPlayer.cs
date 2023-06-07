@@ -115,7 +115,7 @@ public class ScriptedTutorialPlayer : APlayer
         m_VisualGameManager.RequestFinishMove(piece, targetZone);
 
         // Mark that the player completed tutorial on the last round
-        if (m_RoundCounter == 3)
+        if (m_RoundCounter == 2)
         {
             TutorialHelper.HasCompletedTutorial = true;
         }
