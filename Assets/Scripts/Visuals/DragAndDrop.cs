@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 public class DragAndDrop : MonoBehaviour
 {
-    private static Plane m_Plane = new Plane(Vector3.up, 0);
+    //private static Plane m_Plane = new Plane(Vector3.up, 0);
 
     private Vector3 m_StartPos;
 
@@ -43,9 +43,11 @@ public class DragAndDrop : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (m_Plane.Raycast(ray, out float distance)) // && !EventSystem.current.IsPointerOverGameObject()
+        int layerMask = 1 << LayerMask.NameToLayer("DropSurface");
+
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f, layerMask, QueryTriggerInteraction.Collide)) // && !EventSystem.current.IsPointerOverGameObject()
         {
-            TargetController.Instance.Rigidbody.position = ray.GetPoint(distance);
+            TargetController.Instance.Rigidbody.position = hitInfo.point;
         }
     }
 

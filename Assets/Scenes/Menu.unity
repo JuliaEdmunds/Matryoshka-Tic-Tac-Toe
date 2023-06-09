@@ -1467,7 +1467,7 @@ PrefabInstance:
     - target: {fileID: 4075454190473867265, guid: 08a9d0123c75f574ab335bb9a544a053,
         type: 3}
       propertyPath: m_LineOffset.y
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4075454190473867265, guid: 08a9d0123c75f574ab335bb9a544a053,
         type: 3}
@@ -8014,6 +8014,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127562464}
   m_CullTransparentMesh: 1
+--- !u!1 &1161217077
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1161217078}
+  - component: {fileID: 1161217079}
+  m_Layer: 3
+  m_Name: Drop Surface
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1161217078
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161217077}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -4.11, z: 0.61}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 543450652362077400}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1161217079
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161217077}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.0938597, y: 5.4856296, z: 0.08999998}
+  m_Center: {x: 0.03379962, y: 0.81716985, z: 0.45265612}
 --- !u!1 &1166694673
 GameObject:
   m_ObjectHideFlags: 0
