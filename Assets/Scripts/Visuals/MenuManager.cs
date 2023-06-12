@@ -10,7 +10,6 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject m_Instructions;
 
     [Header("Settings")]
-    [SerializeField] private GameObject m_SettingsButton;
     [SerializeField] private GameObject m_SettingsScreen;
 
     [Header("Tutorial")]
@@ -25,9 +24,6 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject m_BlueCrown;
     [SerializeField] private GameObject m_RedCrown;
 
-   //private Character m_CurrentGrabbedCharacter;
-   //public Character CurrentGrabbedCharacter => m_CurrentGrabbedCharacter;
-
 
     private void Start()
     {
@@ -41,7 +37,6 @@ public class MenuManager : MonoBehaviour
         ELanguage language = LanguageHelper.GetLocale();
         LanguageHelper.SetLocale(language);
 
-        m_SettingsButton.SetActive(true);
         m_ExitButton.SetActive(IS_EXIT_BUTTON_VISIBLE);
 
         for (int i = 0; i < m_CharacterSlots.Count; i++)
@@ -108,7 +103,6 @@ public class MenuManager : MonoBehaviour
     public void LoadScene()
     {
         m_TutorialManager.TutorialScreen.SetActive(false);
-        m_SettingsButton.SetActive(false);
         SceneController.ChangeScene(EScene.Gameplay);
     }
 
@@ -120,7 +114,6 @@ public class MenuManager : MonoBehaviour
     private void OnDestroy()
     {
         CharacterSlot.OnCharacterTypeChanged -= OnCharacterTypeChanged;
-        //m_CharacterTypes.ForEach(character => { character.OnCharacterGrabbed -= OnCharacterGrabbed; character.OnCharacterReleased -= OnCharacterReleased; });
     }
 
     public void QuitGame()

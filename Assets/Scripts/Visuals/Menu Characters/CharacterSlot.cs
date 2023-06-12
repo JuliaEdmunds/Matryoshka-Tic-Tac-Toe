@@ -82,6 +82,7 @@ public class CharacterSlot : MonoBehaviour
     private IEnumerator DoChangeCharacter(EPlayerType draggedOpponentType)
     {
         m_CurrentSlot.m_PedestalSmoke.Play();
+        MenuAudioManager.Instance.PlayCharacterAppeared();
 
         yield return new WaitForSeconds(0.75f);
 

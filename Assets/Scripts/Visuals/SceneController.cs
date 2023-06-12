@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -7,9 +8,16 @@ using UnityEngine.SceneManagement;
 public class SceneController : MonoBehaviour
 {
     private static SceneController m_Instance;
+    public static SceneController Instance => m_Instance;
+    public static bool IsCreated => Instance != null;
+
     private static Animator m_CurtainAnimator;
 
     private const string CLOSE_TRIGGER = "isClosing";
+
+    public static bool IsLoading { get; private set; }
+    public static event Action OnStartedLoading;
+    public static event Action OnFinishedLoading;
 
     public static void ChangeScene(EScene sceneToLoad)
     {
@@ -20,6 +28,9 @@ public class SceneController : MonoBehaviour
 
     private IEnumerator DoChangeScene(EScene sceneToLoad)
     {
+        IsLoading = true;
+        OnStartedLoading?.Invoke();
+
         string scene = sceneToLoad.ToString();
 
         m_CurtainAnimator.SetBool(CLOSE_TRIGGER, true);
@@ -28,7 +39,11 @@ public class SceneController : MonoBehaviour
 
         SceneManager.LoadScene(scene);
 
+        IsLoading = false;
+        OnFinishedLoading?.Invoke();
+
         m_CurtainAnimator.SetBool(CLOSE_TRIGGER, false);
+
     }
 
     public static Camera GetOverlayCamera()

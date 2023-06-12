@@ -14,6 +14,7 @@ public class Crasher : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent<Piece>(out Piece crushedPiece))
         {
+            GameplayAudioManager.Instance.PlayCharacterCrashed();
             m_CrusherPiece.CrashOpponent();
             crushedPiece.BeCrashed();
         }

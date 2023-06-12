@@ -9,9 +9,8 @@ public class MenuSettingsManager : MonoBehaviour
     [SerializeField] private GameObject m_BackButton;
     [SerializeField] private GameObject m_SettingsScreen;
 
-    [Header("Audio")]
+    [Header("Audio Settings")]
     [SerializeField] private Slider m_VolumeSlider;
-    [SerializeField] private AudioSource m_AudioSource;
     [SerializeField] private Image m_VolumeImage;
     [SerializeField] private Sprite m_FullVolumeImage;
     [SerializeField] private Sprite m_LowVolumeImage;
@@ -30,8 +29,6 @@ public class MenuSettingsManager : MonoBehaviour
 
         LoadTheLanguage();
         LoadVolume();
-
-        m_AudioSource.Play();
     }
 
     public void ChangeLocale()
