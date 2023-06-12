@@ -25,8 +25,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject m_BlueCrown;
     [SerializeField] private GameObject m_RedCrown;
 
-    private Character m_CurrentGrabbedCharacter;
-    public Character CurrentGrabbedCharacter => m_CurrentGrabbedCharacter;
+   //private Character m_CurrentGrabbedCharacter;
+   //public Character CurrentGrabbedCharacter => m_CurrentGrabbedCharacter;
 
 
     private void Start()
@@ -41,6 +41,7 @@ public class MenuManager : MonoBehaviour
         ELanguage language = LanguageHelper.GetLocale();
         LanguageHelper.SetLocale(language);
 
+        m_SettingsButton.SetActive(true);
         m_ExitButton.SetActive(IS_EXIT_BUTTON_VISIBLE);
 
         for (int i = 0; i < m_CharacterSlots.Count; i++)
@@ -107,7 +108,8 @@ public class MenuManager : MonoBehaviour
     public void LoadScene()
     {
         m_TutorialManager.TutorialScreen.SetActive(false);
-        SceneController.ChangeScene(EScene.Main);
+        m_SettingsButton.SetActive(false);
+        SceneController.ChangeScene(EScene.Gameplay);
     }
 
     public void OpenSettings()

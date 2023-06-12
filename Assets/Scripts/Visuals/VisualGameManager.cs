@@ -30,6 +30,7 @@ public class VisualGameManager : MonoBehaviour
     [Header("Game Over")]
     [SerializeField] private GameObject m_GameOverScreen;
     [SerializeField] private TextMeshProUGUI m_GameOverText;
+    [SerializeField] private GameObject m_BackToMenuButton;
 
     private GameLogic m_GameLogic = new();
     private Dictionary<KeyValuePair<EPlayerColour, EPiece>, Piece> m_PieceMappings = new();
@@ -43,6 +44,8 @@ public class VisualGameManager : MonoBehaviour
         m_GameLogic.OnTurnStarted += OnTurnStarted;
         m_GameLogic.OnTurnEnded += OnTurnEnded;
         m_GameLogic.OnGameEnded += OnGameEnded;
+
+        m_BackToMenuButton.SetActive(true);
 
         if (!TutorialHelper.HasCompletedTutorial)
         {
@@ -448,6 +451,7 @@ public class VisualGameManager : MonoBehaviour
 
     public void BackToMenu()
     {
+        m_BackToMenuButton.SetActive(false);
         SceneController.ChangeScene(EScene.Menu);
     }
 

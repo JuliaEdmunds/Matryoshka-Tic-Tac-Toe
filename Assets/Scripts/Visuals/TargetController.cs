@@ -11,9 +11,6 @@ public class TargetController : MonoBehaviour
     [SerializeField] private Rigidbody m_Rigidbody;
     public Rigidbody Rigidbody => m_Rigidbody;
 
-    [Header("Positions")]
-    [SerializeField] private Vector3 m_LineOffset;
-
     private List<Dropzone> m_OccupiedDropzones = new();
     public List<Dropzone> OccupiedDropzones => m_OccupiedDropzones;
 
@@ -37,7 +34,7 @@ public class TargetController : MonoBehaviour
 
     private void Update()
     {
-        Vector3 targetPos = gameObject.transform.position + m_LineOffset;
+        Vector3 targetPos = gameObject.transform.position;
         m_LineRenderer.SetPosition(1, targetPos);
     }
 

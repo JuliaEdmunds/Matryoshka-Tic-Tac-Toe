@@ -9,6 +9,6 @@ public enum EScene
     Splash,
     LanguageSettings,
     Menu,
-    Main
+    Gameplay
 }
 
