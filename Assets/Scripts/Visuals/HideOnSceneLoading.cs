@@ -27,7 +27,7 @@ public class HideOnSceneLoading : MonoBehaviour
 
     private void OnFinishedLoading()
     {
-        //m_ButtonToHide.SetActive(true);
+        m_ButtonToHide.SetActive(true);
     }
 
     private void OnDestroy()

@@ -74,13 +74,6 @@ public class VisualGameManager : MonoBehaviour
         m_GameLogic.StartGame();
     }
 
-    private void OnDestroy()
-    {
-        m_GameLogic.OnTurnStarted -= OnTurnStarted;
-        m_GameLogic.OnTurnEnded -= OnTurnEnded;
-        m_GameLogic.OnGameEnded -= OnGameEnded;
-    }
-
     int m_CurrentLineIndex = 0;
     public IEnumerator ShowNextTutorialText()
     {
@@ -458,5 +451,14 @@ public class VisualGameManager : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+
+        m_GameLogic.OnTurnStarted -= OnTurnStarted;
+        m_GameLogic.OnTurnEnded -= OnTurnEnded;
+        m_GameLogic.OnGameEnded -= OnGameEnded;
     }
 }

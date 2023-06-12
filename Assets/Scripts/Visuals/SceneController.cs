@@ -39,10 +39,12 @@ public class SceneController : MonoBehaviour
 
         SceneManager.LoadScene(scene);
 
+        m_CurtainAnimator.SetBool(CLOSE_TRIGGER, false);
+
+        yield return new WaitForSeconds(1.25f);
+
         IsLoading = false;
         OnFinishedLoading?.Invoke();
-
-        m_CurtainAnimator.SetBool(CLOSE_TRIGGER, false);
 
     }
 
