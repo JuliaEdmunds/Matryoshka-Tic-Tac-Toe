@@ -26,7 +26,8 @@ public class DragAndDrop : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!enabled)
+        // block if not enabled or pointer is over some UI
+        if (!enabled || EventSystem.current.IsPointerOverGameObject())
         {
             return;
         }
@@ -36,7 +37,8 @@ public class DragAndDrop : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if (!enabled)
+        // block if not enabled or pointer is over some UI
+        if (!enabled || EventSystem.current.IsPointerOverGameObject())
         {
             return;
         }
@@ -45,7 +47,7 @@ public class DragAndDrop : MonoBehaviour
 
         int layerMask = 1 << LayerMask.NameToLayer("DropSurface");
 
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f, layerMask, QueryTriggerInteraction.Collide)) // && !EventSystem.current.IsPointerOverGameObject()
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f, layerMask, QueryTriggerInteraction.Collide))
         {
             TargetController.Instance.Rigidbody.position = hitInfo.point;
         }
