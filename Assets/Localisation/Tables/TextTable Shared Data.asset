@@ -15,34 +15,6 @@ MonoBehaviour:
   m_TableCollectionName: TextTable
   m_TableCollectionNameGuidString: 2416f9674a1495141813f662d8bd2224
   m_Entries:
-  - m_Id: 1050082762752
-    m_Key: SmartAIPlayer
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6399711993856
-    m_Key: PlayButton
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6301443645440
-    m_Key: MenuInstruction2
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6299111612416
-    m_Key: MenuInstruction1
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1697586831360
-    m_Key: MenuInstruction0
-    m_Metadata:
-      m_Items: []
-  - m_Id: 14534270976
-    m_Key: HumanPlayer
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1233810055168
-    m_Key: DragInstruction
-    m_Metadata:
-      m_Items: []
   - m_Id: 761107800064
     m_Key: BasicAIPlayer
     m_Metadata:
@@ -51,8 +23,12 @@ MonoBehaviour:
     m_Key: BluePlayerWon
     m_Metadata:
       m_Items: []
-  - m_Id: 25005778755584
-    m_Key: RedPlayerWon
+  - m_Id: 1233810055168
+    m_Key: DragInstruction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 777270290505728
+    m_Key: ExitGame
     m_Metadata:
       m_Items: []
   - m_Id: 58634001145856
@@ -75,12 +51,36 @@ MonoBehaviour:
     m_Key: GameplayInstruction4
     m_Metadata:
       m_Items: []
-  - m_Id: 777270290505728
-    m_Key: ExitGame
+  - m_Id: 14534270976
+    m_Key: HumanPlayer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1697586831360
+    m_Key: MenuInstruction0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6299111612416
+    m_Key: MenuInstruction1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6301443645440
+    m_Key: MenuInstruction2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6399711993856
+    m_Key: PlayButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25005778755584
+    m_Key: RedPlayerWon
     m_Metadata:
       m_Items: []
   - m_Id: 778723147079680
     m_Key: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1050082762752
+    m_Key: SmartAIPlayer
     m_Metadata:
       m_Items: []
   m_Metadata:

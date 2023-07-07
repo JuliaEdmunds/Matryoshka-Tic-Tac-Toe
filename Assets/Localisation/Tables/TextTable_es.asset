@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: TextTable_es
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: es
+  m_SharedData: {fileID: 11400000, guid: 2416f9674a1495141813f662d8bd2224, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 761107800064
+    m_Localized: "IA B\xE1sica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24959981150208
+    m_Localized: "Jugador Azul Gan\xF3"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1233810055168
+    m_Localized: Arrastrar los personajes dentro de los pedestales
+    m_Metadata:
+      m_Items: []
+  - m_Id: 777270290505728
+    m_Localized: Salir del Juego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 58634001145856
+    m_Localized: "Arrastra y suelta la pieza resaltada en el cubo resaltado para
+      ponerla en el tablero. Una vezla pieza est\xE9 en el tablero no podr\xE1s moverla
+      de nuevo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60364784885760
+    m_Localized: "El oponente y t\xFA se alternar\xE1n poniendo sus piezas en el
+      tablero a trav\xE9s del juego."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60690963324928
+    m_Localized: "Arrastra y suelta la pieza resaltada en el cubo resaltado para
+      aplazastar la pieza peque\xF1a de tu oponente (puedes tambi\xE9n aplaztar tus
+      propias piezas si as\xED lo deseas)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61673097355264
+    m_Localized: "Ahora tu oponente realizar\xE1 la siguiente movida..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61833021972480
+    m_Localized: "El jugador que logre colocar trez de sus piezas en una fila horizontal,
+      vertical o diagonal gana el juego. Contin\xFAa y pon tu pieza en el tablero
+      para ganar!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14534270976
+    m_Localized: Humano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1697586831360
+    m_Localized: Bienvenido a Matryoshka Tic Tac Toe! Para jugar el juego, tienes
+      que escoger primero los personajes. Comencemos con arrastrando el jugador humano
+      en la ranura del jugador azul.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6299111612416
+    m_Localized: "Muy bien hecho! Ahora selecciona la IA B\xE1sica como tu oponente
+      y arrastrala en la ranura del jugador rojo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6301443645440
+    m_Localized: "Muy bien! Contin\xFAa y presiona \"Jugar\" para que te pueda mostrar
+      como jugar el juego."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6399711993856
+    m_Localized: Jugar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25005778755584
+    m_Localized: "Jugador Rojo Gan\xF3"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 778723147079680
+    m_Localized: Configuraciones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1050082762752
+    m_Localized: "IA m\xE1s Inteligente"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

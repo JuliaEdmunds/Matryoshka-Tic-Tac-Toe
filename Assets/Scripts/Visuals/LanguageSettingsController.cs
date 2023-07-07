@@ -15,6 +15,10 @@ public class LanguageSettingsController : MonoBehaviour
     [SerializeField] private Button m_NextButton;
     [SerializeField] private Toggle m_EnglishToggle;
     [SerializeField] private Toggle m_PolishToggle;
+    [SerializeField] private Toggle m_PortugueseToggle;
+    [SerializeField] private Toggle m_SpanishToggle;
+    [SerializeField] private Toggle m_RussianToggle;
+
 
     private void Awake()
     {
@@ -38,9 +42,21 @@ public class LanguageSettingsController : MonoBehaviour
         {
             LanguageHelper.SetLocale(ELanguage.English);
         }
-        else
+        else if (m_PolishToggle.isOn)
         {
             LanguageHelper.SetLocale(ELanguage.Polish);
+        }
+        else if (m_PortugueseToggle.isOn)
+        {
+            LanguageHelper.SetLocale(ELanguage.Portuguese);
+        }
+        else if (m_SpanishToggle.isOn)
+        {
+            LanguageHelper.SetLocale(ELanguage.Spanish);
+        }
+        else
+        {
+            LanguageHelper.SetLocale(ELanguage.Russian);
         }
     }
 

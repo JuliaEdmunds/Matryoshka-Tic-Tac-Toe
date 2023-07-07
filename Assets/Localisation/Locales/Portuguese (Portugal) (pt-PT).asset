@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1bb1838fe8befb0429646b938e757ff3, type: 3}
-  m_Name: Polish (Poland) (pl-PL)
+  m_Name: Portuguese (Portugal) (pt-PT)
   m_EditorClassIdentifier: 
   m_Identifier:
-    m_Code: pl-PL
+    m_Code: pt-PT
   m_Metadata:
     m_Items: []
-  m_LocaleName: Polish (Poland) (pl-PL)
+  m_LocaleName: Portuguese (Portugal) (pt-PT)
   m_CustomFormatCultureCode: 
   m_UseCustomFormatter: 0
-  m_SortOrder: 1
+  m_SortOrder: 4
   references:
     version: 2
     RefIds: []

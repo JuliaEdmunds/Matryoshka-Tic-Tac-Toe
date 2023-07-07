@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 public enum ELanguage
 {
     English = 0,
-    Polish
+    Polish,
+    Portuguese,
+    Spanish,
+    Russian
 }
 
