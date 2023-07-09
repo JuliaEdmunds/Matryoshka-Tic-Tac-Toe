@@ -125,7 +125,7 @@ PrefabInstance:
     - target: {fileID: 7632393583189292613, guid: 455767f6179c3fc4f907f214671a1d06,
         type: 3}
       propertyPath: m_text
-      value: ' Russian'
+      value: " \u0420\u0443\u0441\u0441\u043A\u0438\u0439"
       objectReference: {fileID: 0}
     - target: {fileID: 7632393584713852615, guid: 455767f6179c3fc4f907f214671a1d06,
         type: 3}
