@@ -32,6 +32,8 @@ public class MenuSettingsManager : MonoBehaviour
 
         LoadTheLanguage();
         LoadVolume();
+
+        m_SettingsScreen.SetActive(false);
     }
 
     public void ChangeLocale()

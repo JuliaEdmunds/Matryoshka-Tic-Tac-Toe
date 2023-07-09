@@ -22,7 +22,7 @@ PrefabInstance:
     - target: {fileID: 3583845437322526306, guid: 128a893b70850f84a82710b26eb927fa,
         type: 3}
       propertyPath: m_Name
-      value: Spanish Toggle
+      value: Spanish Toggle Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3583845437322526317, guid: 128a893b70850f84a82710b26eb927fa,
         type: 3}
@@ -138,6 +138,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontSize
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583845437557389440, guid: 128a893b70850f84a82710b26eb927fa,
+        type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 128a893b70850f84a82710b26eb927fa, type: 3}
