@@ -11,6 +11,7 @@ public enum ELanguage
     Polish,
     Portuguese,
     Spanish,
-    Russian
+    Russian,
+    German
 }
 

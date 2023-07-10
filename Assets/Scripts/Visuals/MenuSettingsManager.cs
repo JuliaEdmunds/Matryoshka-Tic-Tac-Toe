@@ -22,6 +22,7 @@ public class MenuSettingsManager : MonoBehaviour
     [SerializeField] private Toggle m_PortugueseToggle;
     [SerializeField] private Toggle m_SpanishToggle;
     [SerializeField] private Toggle m_RussianToggle;
+    [SerializeField] private Toggle m_GermanToggle;
 
     private void Start()
     {
@@ -41,6 +42,10 @@ public class MenuSettingsManager : MonoBehaviour
         if (m_EnglishToggle.isOn)
         {
             LanguageHelper.SetLocale(ELanguage.English);
+        }
+        else if (m_GermanToggle.isOn)
+        {
+            LanguageHelper.SetLocale(ELanguage.German);
         }
         else if (m_PolishToggle.isOn)
         {
@@ -69,6 +74,9 @@ public class MenuSettingsManager : MonoBehaviour
             default:
             case ELanguage.English:
                 m_EnglishToggle.isOn = true;
+                break;
+            case ELanguage.German:
+                m_GermanToggle.isOn = true;
                 break;
             case ELanguage.Polish:
                 m_PolishToggle.isOn = true;
