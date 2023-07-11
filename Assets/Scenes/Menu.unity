@@ -1638,7 +1638,7 @@ MonoBehaviour:
   - {fileID: 1378731083}
   m_CharacterTypes:
   - {fileID: 1023111685}
-  - {fileID: 0}
+  - {fileID: 2088074835}
   - {fileID: 4305231711784061}
   m_BlueCrown: {fileID: 1366453912}
   m_RedCrown: {fileID: 2009638795}
@@ -1731,9 +1731,9 @@ MonoBehaviour:
   m_fontSize: 38
   m_fontSizeBase: 38
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 38
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -15836,8 +15836,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 2.5
-  m_fontSizeBase: 2.5
+  m_fontSize: 2
+  m_fontSizeBase: 2
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

@@ -2,15 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Linq;
 using TMPro;
 using System;
-using System.IO;
-using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using System.Reflection;
-using System.Net;
+
 
 public class VisualGameManager : MonoBehaviour
 {
@@ -227,7 +223,6 @@ public class VisualGameManager : MonoBehaviour
 
     private IEnumerator DoRequestFinishMove(Piece piece, Dropzone targetZone)
     {
-        // TODO: Here goes the animation (crushing, moving, etc.)
         yield return MovePiece(piece, targetZone);
 
         targetZone.NeutralCube.SetActive(false);

@@ -24,7 +24,6 @@ public class TutorialManager : MonoBehaviour
     private int m_CurrentRoundOfMoves;
     private List<Character> m_CharacterTypes;
     private Character m_CurrentCharacter;
-    private bool m_HasCompletedStep;
 
     public Character CurrentTutorialCharacter => m_CurrentCharacter;
 

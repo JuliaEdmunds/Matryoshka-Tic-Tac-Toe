@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Piece : MonoBehaviour
@@ -79,8 +77,6 @@ public class Piece : MonoBehaviour
         m_AnimationController.BeCrashed();
 
         m_Smoke.Play();
-
-        //TODO: Add crushing sound
     }
 
     public void ResetAnimation()

@@ -1,16 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class SmarterAIPlayer : AAIPlayer
 {
-    // TODO:
+    // Characteristics:
     // 1) Gather all available moves
     // 2) If there's guaranteed move to win then play it 
     // 3) If possible place piece on the opponents piece otherwise place weakest piece in random position
-
-    // TODO: SmartAI to be created => for now it's a copy paste of BasicAI - just not to crash the game
 
     private Dropzone m_CurrentTargetZone;
     private List<KeyValuePair<Piece, EGrid>> m_AllValidMoves;
