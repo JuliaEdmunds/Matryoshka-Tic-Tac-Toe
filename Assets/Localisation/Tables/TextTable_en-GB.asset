@@ -74,7 +74,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 60690963324928
     m_Localized: 'Drag and drop the highlighted piece on the highlighted cube to
-      crash your opponent''s smaller piece (you can also crash your own pieces if
+      crush your opponent''s smaller piece (you can also crush your own pieces if
       you want to). '
     m_Metadata:
       m_Items: []
@@ -94,6 +94,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 778723147079680
     m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18479270897606656
+    m_Localized: Next
     m_Metadata:
       m_Items: []
   references:

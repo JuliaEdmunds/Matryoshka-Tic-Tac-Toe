@@ -2532,7 +2532,7 @@ MonoBehaviour:
   m_text: Player won
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 05b25f8a08a4daa4ca26944cb2eece8e, type: 2}
-  m_sharedMaterial: {fileID: -5160500600349162300, guid: 079e2e8edeb62c9498515fde07ffdf67,
+  m_sharedMaterial: {fileID: -6131163013698261718, guid: 05b25f8a08a4daa4ca26944cb2eece8e,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2656,9 +2656,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990721081}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 997.9566, y: 586.52313, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9999999, y: 0.9999999, z: 0.9999999}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 567666815}

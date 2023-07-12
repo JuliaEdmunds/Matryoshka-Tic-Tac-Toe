@@ -83,6 +83,10 @@ MonoBehaviour:
     m_Key: SmartAIPlayer
     m_Metadata:
       m_Items: []
+  - m_Id: 18479270897606656
+    m_Key: Next
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
