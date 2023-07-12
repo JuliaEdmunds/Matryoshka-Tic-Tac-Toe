@@ -1,5 +1,0 @@
-Welcome to Matryoshka Tic Tac Toe! To play the game you first need to choose the characters. Let's start by dragging the Human player into the blue player slot.
-
-Nicely done! Now select the Basic AI as your opponent and drag it into the red player slot.
-
-Great! Go ahead and press "Play" so I can show you how to play the game.
