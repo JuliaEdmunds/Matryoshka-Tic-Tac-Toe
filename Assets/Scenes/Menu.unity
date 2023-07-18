@@ -2688,7 +2688,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 5
+      value: 8
       mode: 0
       spread: 0
       speed:
@@ -6735,8 +6735,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 13.922356, y: 16.12997, z: 12}
-  m_Center: {x: 0.2856121, y: -2.3550205, z: 5.081142}
+  m_Size: {x: 17.955738, y: 18.873066, z: 12}
+  m_Center: {x: -0.3025651, y: -0.9834728, z: 5.081142}
 --- !u!4 &648446391 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4099150737583718416, guid: 0e0ccd88222c33e409218947d69fdf29,
@@ -9725,7 +9725,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 5
+      value: 8
       mode: 0
       spread: 0
       speed:
@@ -13772,8 +13772,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 11.953915, y: 16.4902, z: 12.435863}
-  m_Center: {x: 1.3285024, y: -1.9384003, z: 5.5079327}
+  m_Size: {x: 18.917313, y: 19.048622, z: 12.051276}
+  m_Center: {x: 0.30386496, y: -0.6591892, z: 5.3156395}
 --- !u!1001 &1427195578
 PrefabInstance:
   m_ObjectHideFlags: 0
