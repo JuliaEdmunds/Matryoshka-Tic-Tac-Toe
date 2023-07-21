@@ -17751,6 +17751,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robot_Guardian
       objectReference: {fileID: 0}
+    - target: {fileID: 6056642339453016571, guid: 7906144284b8fdd4ba24ece0277e3c2c,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.6362352
+      objectReference: {fileID: 0}
+    - target: {fileID: 6056642339453016571, guid: 7906144284b8fdd4ba24ece0277e3c2c,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 2.2185657e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6056642339453016571, guid: 7906144284b8fdd4ba24ece0277e3c2c,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.7902117
+      objectReference: {fileID: 0}
+    - target: {fileID: 6056642339453016571, guid: 7906144284b8fdd4ba24ece0277e3c2c,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -0.02817052
+      objectReference: {fileID: 0}
     - target: {fileID: 6061173099018847875, guid: 7906144284b8fdd4ba24ece0277e3c2c,
         type: 3}
       propertyPath: m_RootOrder
