@@ -420,7 +420,15 @@ public class VisualGameManager : MonoBehaviour
         }
         else
         {
-            m_GameOverText.text = "It's a draw...";
+            var op = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("TextTable", "Draw");
+            if (op.IsDone)
+            {
+                m_GameOverText.text = $"{op.Result}";
+            }
+            else
+            {
+                op.Completed += OnGameOverLocalisedStringProcessed;
+            }
         }
 
         m_GameOverScreen.SetActive(true);

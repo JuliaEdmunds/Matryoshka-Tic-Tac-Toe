@@ -101,6 +101,10 @@ MonoBehaviour:
     m_Localized: Dalej
     m_Metadata:
       m_Items: []
+  - m_Id: 22848645054291968
+    m_Localized: Remis
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
