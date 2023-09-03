@@ -1,4 +1,4 @@
-# Matryoshka-Tic-Tac-Toe
+# Matryoshka Tic Tac Toe
  
 ## Project goal
 The aim of this project was to create a 3D game that utilises drag-and-drop functionality and learn/practice how to create feel-good animations. The goal was to also allow for local multiplayer and playing against a simple AI.
