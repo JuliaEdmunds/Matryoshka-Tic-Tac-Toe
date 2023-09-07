@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -45,7 +43,6 @@ public class SceneController : MonoBehaviour
 
         IsLoading = false;
         OnFinishedLoading?.Invoke();
-
     }
 
     public static Camera GetOverlayCamera()

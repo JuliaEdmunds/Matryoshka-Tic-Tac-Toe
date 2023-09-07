@@ -10,4 +10,3 @@ public static class TutorialHelper
         set => PlayerPrefs.SetInt(TUTORIAL_PREF_KEY, value ? 1 : 0);
     }
 }
-

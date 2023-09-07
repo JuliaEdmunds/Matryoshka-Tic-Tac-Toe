@@ -1,10 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Unity.VisualScripting;
-using UnityEngine;
 
 public class GameLogic
 {
@@ -14,8 +11,8 @@ public class GameLogic
 
     public EPlayerColour CurrentPlayer { get; private set; }
 
-    private List<EPiece> m_PlayerBlueValidPieces = new();
-    private List<EPiece> m_PlayerRedValidPPieces = new();
+    private readonly List<EPiece> m_PlayerBlueValidPieces = new();
+    private readonly List<EPiece> m_PlayerRedValidPPieces = new();
 
     public BoardTile[] m_BoardTiles { get; private set; }
 

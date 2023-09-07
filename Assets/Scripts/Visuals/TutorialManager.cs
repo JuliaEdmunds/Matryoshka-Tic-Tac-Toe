@@ -214,4 +214,3 @@ public class TutorialManager : MonoBehaviour
         CharacterSlot.OnCharacterTypeChanged -= OnCharacterTypeChanged;
     }
 }
-

@@ -1,15 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class DragAndDrop : MonoBehaviour
 {
-    //private static Plane m_Plane = new Plane(Vector3.up, 0);
-
     private Vector3 m_StartPos;
 
     // Game Logic needs to track which piece occupies which dropzone

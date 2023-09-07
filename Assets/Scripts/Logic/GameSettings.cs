@@ -1,6 +1,4 @@
-﻿using System;
-
-public static class GameSettings
+﻿public static class GameSettings
 {
     public static EPlayerType BluePlayer = EPlayerType.Invalid;
 

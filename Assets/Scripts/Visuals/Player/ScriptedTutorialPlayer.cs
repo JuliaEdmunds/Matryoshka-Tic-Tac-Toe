@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class ScriptedTutorialPlayer : APlayer
@@ -10,8 +8,8 @@ public class ScriptedTutorialPlayer : APlayer
     private List<Piece> m_CurrentlyActivePieces;
     private Coroutine m_Coroutine;
 
-    private List<EPiece> m_CurrentlyActivePiecesTypes = new();
-    private List<EGrid> m_CurrentValidTiles = new();
+    private readonly List<EPiece> m_CurrentlyActivePiecesTypes = new();
+    private readonly List<EGrid> m_CurrentValidTiles = new();
 
     public override void StartTurn(List<Piece> activePieces)
     {
@@ -161,6 +159,3 @@ public class ScriptedTutorialPlayer : APlayer
         m_VisualGameManager.TutorialScreen.SetActive(false);
     }
 }
-
-
-

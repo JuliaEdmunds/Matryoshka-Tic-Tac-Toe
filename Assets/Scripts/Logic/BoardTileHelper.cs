@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
-
 
 public static class BoardTileHelper
 {
-    private static Random rng = new Random();
+    private static readonly Random rng = new();
 
     public static BoardTile[] CloneBoard(this BoardTile[] originalBoard)
     {

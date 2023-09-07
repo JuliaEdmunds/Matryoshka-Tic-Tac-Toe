@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class TargetController : MonoBehaviour
 {
@@ -11,7 +8,7 @@ public class TargetController : MonoBehaviour
     [SerializeField] private Rigidbody m_Rigidbody;
     public Rigidbody Rigidbody => m_Rigidbody;
 
-    private List<Dropzone> m_OccupiedDropzones = new();
+    private readonly List<Dropzone> m_OccupiedDropzones = new();
     public List<Dropzone> OccupiedDropzones => m_OccupiedDropzones;
 
     public static TargetController Instance { get; private set; }
@@ -98,4 +95,3 @@ public class TargetController : MonoBehaviour
         }
     }
 }
-

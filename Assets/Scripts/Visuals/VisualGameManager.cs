@@ -1,12 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro;
 using System;
 using UnityEngine.Localization.Settings;
 using UnityEngine.ResourceManagement.AsyncOperations;
-
 
 public class VisualGameManager : MonoBehaviour
 {
@@ -27,9 +25,9 @@ public class VisualGameManager : MonoBehaviour
     [SerializeField] private GameObject m_GameOverScreen;
     [SerializeField] private TextMeshProUGUI m_GameOverText;
 
-    private GameLogic m_GameLogic = new();
-    private Dictionary<KeyValuePair<EPlayerColour, EPiece>, Piece> m_PieceMappings = new();
-    private List<Piece> m_CurrentActivePieces = new();
+    private readonly GameLogic m_GameLogic = new();
+    private readonly Dictionary<KeyValuePair<EPlayerColour, EPiece>, Piece> m_PieceMappings = new();
+    private readonly List<Piece> m_CurrentActivePieces = new();
 
     private APlayer m_BluePlayer;
     private APlayer m_RedPlayer;
@@ -446,14 +444,6 @@ public class VisualGameManager : MonoBehaviour
     public void BackToMenu()
     {
         SceneController.ChangeScene(EScene.Menu);
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
     }
 
     private void OnDestroy()

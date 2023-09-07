@@ -25,4 +25,3 @@ public static class LanguageHelper
         PlayerPrefs.SetInt(LANGUAGE_PREF_KEY, localeID);
     }
 }
-

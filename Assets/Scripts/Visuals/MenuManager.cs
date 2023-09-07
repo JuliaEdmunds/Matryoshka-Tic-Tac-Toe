@@ -125,4 +125,3 @@ public class MenuManager : MonoBehaviour
 #endif
     }
 }
-

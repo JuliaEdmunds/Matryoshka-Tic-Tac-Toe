@@ -136,4 +136,3 @@ public class MenuSettingsManager : MonoBehaviour
         m_SettingsScreen.SetActive(false);
     }
 }
-
