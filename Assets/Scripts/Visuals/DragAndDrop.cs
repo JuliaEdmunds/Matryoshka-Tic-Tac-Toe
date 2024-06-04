@@ -8,7 +8,7 @@ public class DragAndDrop : MonoBehaviour
     private Vector3 m_StartPos;
 
     // Game Logic needs to track which piece occupies which dropzone
-    public event Action<Dropzone> OnDropped;
+    public event Action<DropZone> OnDropped;
 
     public event Action OnGrabbed;
 
@@ -50,7 +50,7 @@ public class DragAndDrop : MonoBehaviour
 
     private void OnMouseUp()
     {
-        List<Dropzone> occupiedDropzones = TargetController.Instance.OccupiedDropzones;
+        List<DropZone> occupiedDropzones = TargetController.Instance.OccupiedDropzones;
 
         if (!enabled)
         {
@@ -59,7 +59,7 @@ public class DragAndDrop : MonoBehaviour
         
         if (occupiedDropzones.Count == 1)
         {
-            Dropzone targetZone = occupiedDropzones[0];
+            DropZone targetZone = occupiedDropzones[0];
 
             OnDropped(targetZone);
         }

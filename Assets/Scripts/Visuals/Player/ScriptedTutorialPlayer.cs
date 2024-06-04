@@ -108,7 +108,7 @@ public class ScriptedTutorialPlayer : APlayer
         m_VisualGameManager.ResetDropzoneVisualAids();
     }
 
-    private void OnGridOccupied(Piece piece, Dropzone targetZone)
+    private void OnGridOccupied(Piece piece, DropZone targetZone)
     {
         m_VisualGameManager.RequestFinishMove(piece, targetZone);
 
@@ -136,7 +136,7 @@ public class ScriptedTutorialPlayer : APlayer
         m_VisualGameManager.RequestStartMove(piece);
 
         // Get the dropzone from gridID
-        Dropzone targetZone = m_VisualGameManager.GetDropzoneFromGridID(gridID);
+        DropZone targetZone = m_VisualGameManager.GetDropzoneFromGridID(gridID);
 
         // Place the piece on board
         m_VisualGameManager.RequestFinishMove(piece, targetZone);

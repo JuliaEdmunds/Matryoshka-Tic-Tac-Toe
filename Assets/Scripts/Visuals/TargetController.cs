@@ -8,8 +8,8 @@ public class TargetController : MonoBehaviour
     [SerializeField] private Rigidbody m_Rigidbody;
     public Rigidbody Rigidbody => m_Rigidbody;
 
-    private readonly List<Dropzone> m_OccupiedDropzones = new();
-    public List<Dropzone> OccupiedDropzones => m_OccupiedDropzones;
+    private readonly List<DropZone> m_OccupiedDropzones = new();
+    public List<DropZone> OccupiedDropzones => m_OccupiedDropzones;
 
     public static TargetController Instance { get; private set; }
 
@@ -44,22 +44,22 @@ public class TargetController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Dropzone dropzone = other.gameObject.GetComponent<Dropzone>();
+        DropZone dropZone = other.gameObject.GetComponent<DropZone>();
 
-        if (dropzone != null && dropzone.enabled)
+        if (dropZone != null && dropZone.enabled)
         {
-            OccupiedDropzones.Add(dropzone);
+            OccupiedDropzones.Add(dropZone);
 
             if (OccupiedDropzones.Count == 1)
             {
-                dropzone.DropzoneRingHelper.TargetRingOn();
+                dropZone.DropzoneRingHelper.TargetRingOn();
             }
             else
             {
                 for (int i = 0; i < OccupiedDropzones.Count; i++)
                 {
-                    Dropzone currentDropzone = OccupiedDropzones[i];
-                    currentDropzone.DropzoneRingHelper.ValidRingOn();
+                    DropZone currentDropZone = OccupiedDropzones[i];
+                    currentDropZone.DropzoneRingHelper.ValidRingOn();
                 }
             }
         }
@@ -67,12 +67,12 @@ public class TargetController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Dropzone dropzone = other.gameObject.GetComponent<Dropzone>();
+        DropZone dropZone = other.gameObject.GetComponent<DropZone>();
 
-        if (dropzone != null && dropzone.enabled)
+        if (dropZone != null && dropZone.enabled)
         {
-            OccupiedDropzones.Remove(dropzone);
-            dropzone.DropzoneRingHelper.ValidRingOn();
+            OccupiedDropzones.Remove(dropZone);
+            dropZone.DropzoneRingHelper.ValidRingOn();
         }
 
         if (OccupiedDropzones.Count == 1)

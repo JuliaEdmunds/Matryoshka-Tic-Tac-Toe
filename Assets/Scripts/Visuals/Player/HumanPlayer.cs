@@ -15,7 +15,7 @@ public class HumanPlayer : APlayer
         m_VisualGameManager.RequestStartMove(piece);
     }
 
-    private void OnGridOccupied(Piece piece, Dropzone targetZone)
+    private void OnGridOccupied(Piece piece, DropZone targetZone)
     {
         m_VisualGameManager.RequestFinishMove(piece, targetZone);
     }

@@ -13,7 +13,7 @@ public class VisualGameManager : MonoBehaviour
     [SerializeField] private List<Piece> m_PlayerRedPieces = new();
 
     [Header("Board")]
-    [SerializeField] private List<Dropzone> m_Dropzones = new();
+    [SerializeField] private List<DropZone> m_Dropzones = new();
 
     [Header("Tutorial")]
     [SerializeField] private GameObject m_TutorialScreen;
@@ -156,7 +156,7 @@ public class VisualGameManager : MonoBehaviour
         // Grab all the tiles, disable the ones that are not in the validTiles, otherwise set as valid
         for (int i = 0; i < m_Dropzones.Count; i++)
         {
-            Dropzone currentTile = m_Dropzones[i];
+            DropZone currentTile = m_Dropzones[i];
             EGrid currentTilePos = currentTile.GridID;
 
             bool isValidTile = validTiles.Contains(currentTilePos);
@@ -173,7 +173,7 @@ public class VisualGameManager : MonoBehaviour
         }
     }
 
-    public Dropzone GetDropzoneFromGridID(EGrid gridID)
+    public DropZone GetDropzoneFromGridID(EGrid gridID)
     {
         for (int i = 0; i < m_Dropzones.Count; i++)
         {
@@ -214,12 +214,12 @@ public class VisualGameManager : MonoBehaviour
     }
 
     // Set piece on board and adjust the occupied cube colour
-    public void RequestFinishMove(Piece piece, Dropzone targetZone)
+    public void RequestFinishMove(Piece piece, DropZone targetZone)
     {
         StartCoroutine(DoRequestFinishMove(piece, targetZone));
     }
 
-    private IEnumerator DoRequestFinishMove(Piece piece, Dropzone targetZone)
+    private IEnumerator DoRequestFinishMove(Piece piece, DropZone targetZone)
     {
         yield return MovePiece(piece, targetZone);
 
@@ -235,7 +235,7 @@ public class VisualGameManager : MonoBehaviour
         m_GameLogic.SetPieceOnBoard(piece.PieceType, targetZone.GridID);
     }
 
-    private IEnumerator MovePiece(Piece piece, Dropzone targetZone)
+    private IEnumerator MovePiece(Piece piece, DropZone targetZone)
     {
         GameplayAudioManager.Instance.PlayCharacterMoving();
         bool isTaken = false;
@@ -378,8 +378,8 @@ public class VisualGameManager : MonoBehaviour
     {
         for (int i = 0; i < m_Dropzones.Count; i++)
         {
-            Dropzone currentDropzone = m_Dropzones[i];
-            currentDropzone.DropzoneRingHelper.RingOff();
+            DropZone currentDropZone = m_Dropzones[i];
+            currentDropZone.DropzoneRingHelper.RingOff();
         }
     }
 

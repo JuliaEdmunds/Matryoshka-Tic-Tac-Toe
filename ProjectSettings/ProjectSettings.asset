@@ -134,8 +134,9 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.0.3
-  preloadedAssets: []
+  bundleVersion: 1.0.4
+  preloadedAssets:
+  - {fileID: 11400000, guid: 4d2ec331bfd637a41b3e60810e5c734c, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -156,12 +157,13 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.CupsGames.Matryoshka
+    Standalone: com.CupsGames.Matryoshka
   buildNumber:
     Standalone: 0
     iPhone: 0
     tvOS: 0
   overrideDefaultApplicationIdentifier: 0
-  AndroidBundleVersionCode: 6
+  AndroidBundleVersionCode: 7
   AndroidMinSdkVersion: 22
   AndroidTargetSdkVersion: 34
   AndroidPreferredInstallLocation: 1
@@ -172,7 +174,7 @@ PlayerSettings:
   ForceInternetPermission: 0
   ForceSDCardPermission: 0
   CreateWallpaper: 0
-  APKExpansionFiles: 1
+  APKExpansionFiles: 0
   keepLoadedShadersAlive: 0
   StripUnusedMeshComponents: 0
   VertexChannelCompressionMask: 4054
@@ -249,7 +251,7 @@ PlayerSettings:
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: C:/Users/julia/Desktop/Personal Projects/0_Noah/ANoah Pics/user.keystore
+  AndroidKeystoreName: C:/Users/julia/Downloads/user (1).keystore
   AndroidKeyaliasName: 'matryoshka '
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
@@ -273,7 +275,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 38b8a1bc71fd0ac4b9af0475bf4bf3a4, type: 3}
+      m_Icon: {fileID: 2800000, guid: 33ed517ad8d5abf46b94d6c1b0497068, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0

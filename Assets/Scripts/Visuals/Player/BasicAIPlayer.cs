@@ -9,7 +9,7 @@ public class BasicAIPlayer : AAIPlayer
     // 2) If there's guaranteed move to win then BasicAI plays it
     // 3) If not then randomly picks and plays one of the available moves
 
-    private Dropzone m_CurrentTargetZone;
+    private DropZone m_CurrentTargetZone;
     private List<KeyValuePair<Piece, EGrid>> m_AllValidMoves;
 
     public override void StartTurn(List<Piece> activePieces)

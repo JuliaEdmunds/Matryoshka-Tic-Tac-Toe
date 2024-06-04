@@ -20,7 +20,7 @@ public class Piece : MonoBehaviour
 
     [SerializeField] private Crasher m_Crasher;
 
-    public event Action<Piece, Dropzone> OnGridOccupied;
+    public event Action<Piece, DropZone> OnGridOccupied;
     public event Action<Piece> OnPieceGrabbed;
     public event Action OnPieceReleased;
 
@@ -38,7 +38,7 @@ public class Piece : MonoBehaviour
         OnPieceGrabbed(this);
     }
 
-    private void OnDropped(Dropzone tile)
+    private void OnDropped(DropZone tile)
     {
         TargetController.Instance.ResetTarget();
         OnGridOccupied(this, tile);

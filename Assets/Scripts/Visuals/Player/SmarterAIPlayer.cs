@@ -9,7 +9,7 @@ public class SmarterAIPlayer : AAIPlayer
     // 2) If there's guaranteed move to win then play it 
     // 3) If possible place piece on the opponents piece otherwise place weakest piece in random position
 
-    private Dropzone m_CurrentTargetZone;
+    private DropZone m_CurrentTargetZone;
     private List<KeyValuePair<Piece, EGrid>> m_AllValidMoves;
 
     public override void StartTurn(List<Piece> activePieces)

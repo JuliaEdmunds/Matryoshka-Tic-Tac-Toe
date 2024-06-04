@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Dropzone : MonoBehaviour
+public class DropZone : MonoBehaviour
 {
     [SerializeField] private GameObject m_BlueCube;
     public GameObject BlueCube => m_BlueCube;
